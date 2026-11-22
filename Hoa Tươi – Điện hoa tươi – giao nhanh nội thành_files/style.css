@@ -1,0 +1,187 @@
+/*
+Theme Name: DevVN Theme
+Description: 
+Author: DevVN Team
+Template: flatsome
+Version: 1.0
+*/
+
+/*************** ADD CUSTOM CSS HERE.   ***************/
+
+b,
+strong {
+    font-weight: 700;
+}
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    height: 0;
+    margin: 0 0 20px 0;
+}
+
+.videoWrapper iframe,
+.videoWrapper object,
+.videoWrapper embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video.video-fit.mb .videoWrapper {
+    position: unset;
+    padding-bottom: unset;
+    margin: unset;
+}
+
+h1.h1_logo {
+    height: 0;
+    overflow: hidden;
+    width: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+}
+
+.entry-meta.uppercase {
+    letter-spacing: normal;
+    text-transform: none;
+    font-size: .9em;
+}
+
+.term-description ol,
+.term-description ul,
+.entry-content ul,
+.entry-content ol {
+    margin-left: 20px;
+}
+
+
+.woocommerce a.remove,
+[class*="woocommerce"] a.remove {
+    width: 30px;
+    height: 22px;
+    position: relative;
+    transition: opacity 200ms;
+    vertical-align: top;
+    display: block;
+    -webkit-appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    text-indent: -9999px;
+}
+
+.woocommerce a.remove:before,
+.woocommerce a.remove:after,
+[class*="woocommerce"] a.remove:before,
+[class*="woocommerce"] a.remove:after {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAQAAACMnYaxAAAAXUlEQVR4XsWQQQrAQAgD84Pti/JSoaftN1MCdgXxXgYvGfUQyABE4DEIUJmeuKgVlJI5em0RGTesFXXZuLwCzvL2pYbHmfCTNSXxpyyajLGClFy7K1dgaaho7YYovIpO3rju6hYFAAAAAElFTkSuQmCC) 0 0 no-repeat;
+    left: 8px;
+    position: absolute;
+    right: 8px;
+    top: 2px;
+    display: inline-block;
+    content: '';
+}
+
+.woocommerce a.remove:before,
+[class*="woocommerce"] a.remove:before {
+    height: 6px;
+    transform-origin: -7% 100%;
+    -moz-transform-origin: -7% 100%;
+    -webkit-transform-origin: -7% 100%;
+    transition: transform 150ms;
+    -moz-transition: transform 150ms;
+    -webkit-transition: transform 150ms;
+    width: 14px;
+}
+
+.woocommerce a.remove:after,
+[class*="woocommerce"] a.remove:after {
+    background-position: -1px -4px;
+    height: 12px;
+    margin-left: 1px;
+    margin-right: 2px;
+    margin-top: 4px;
+    width: 11px;
+}
+
+.woocommerce a.remove:hover:before,
+[class*="woocommerce"] a.remove:hover:before {
+    transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transition: transform 250ms;
+    -moz-transition: transform 250ms;
+    -webkit-transition: transform 250ms;
+}
+
+.woocommerce a.remove:hover,
+[class*="woocommerce"] a.remove:hover {
+    background: transparent;
+}
+
+.wpcf7 .wpcf7-form-control {
+    border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    -webkit-border-radius: 5px !important;
+    height: 40px;
+}
+
+.wpcf7-response-output {
+    margin: 0 0 20px 0 !important;
+}
+
+form.wpcf7-form:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#ftwp-container.ftwp-wrap #ftwp-header {
+    cursor: pointer;
+}
+
+span.wpcf7-spinner {
+    display: none;
+}
+
+.wpcf7-response-output {
+    margin: 0 !important;
+}
+
+form.wpcf7-form {
+    margin: 0;
+}
+
+.loading-spin.centered,
+.processing:before {
+    max-width: 30px;
+}
+
+.page-title:not(.featured-title)+main .product-main {
+    padding-top: 0;
+}
+
+.product-main {
+    padding-bottom: 0;
+}
+
+.product-section {
+    border-top: 0;
+}
+
+.search-field {
+    background: #fff !important;
+}
+
+@media only screen and (max-width: 48em) {
+    /*************** ADD MOBILE ONLY CSS HERE  ***************/
+
+}

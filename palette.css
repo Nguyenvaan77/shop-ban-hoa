@@ -1,0 +1,95 @@
+/* Bảng màu nhận diện Hoa Tươi */
+:root {
+  --brand-blush: #F6D5E4;
+  --brand-green: #315B2A;
+  --brand-ivory: #FFF9F5;
+  --brand-beige: #E6E2D8;
+  --brand-charcoal: #48483E;
+
+  /* Màu chữ và liên kết dùng xanh để dễ đọc trên nền hồng nhạt. */
+  --primary-color: var(--brand-green);
+  --fs-color-primary: var(--brand-green);
+  --fs-color-secondary: var(--brand-green);
+  --fs-color-success: var(--brand-green);
+  --fs-color-base: var(--brand-charcoal);
+  --fs-experimental-link-color: var(--brand-green);
+  --fs-experimental-link-color-hover: var(--brand-charcoal);
+  --wp--preset--color--primary: var(--brand-green);
+  --wp--preset--color--secondary: var(--brand-green);
+  --ht-green: var(--brand-green);
+  --ht-ink: var(--brand-charcoal);
+  --ht-body: var(--brand-charcoal);
+  --ht-mute: var(--brand-charcoal);
+  --ht-bg: var(--brand-ivory);
+  --ht-bg-soft: var(--brand-beige);
+  --ht-blush-50: var(--brand-ivory);
+  --ht-blush-100: var(--brand-blush);
+  --ht-blush-200: var(--brand-blush);
+  --ht-blush-300: var(--brand-blush);
+  --ht-line: var(--brand-beige);
+  --ht-line-soft: var(--brand-beige);
+  --ht-foot-bg: var(--brand-blush);
+  --ht-foot-line: var(--brand-beige);
+  --ht-foot-title: var(--brand-green);
+  --ht-foot-body: var(--brand-charcoal);
+}
+
+html, body, #wrapper, #main, #main.dark, .header-bg-color {
+  background-color: var(--brand-ivory);
+  color: var(--brand-charcoal);
+}
+h1, h2, h3, h4, h5, h6, .heading-font { color: var(--brand-green); }
+.header-top { background-color: var(--brand-beige) !important; }
+.header-bottom, .footer-1, .absolute-footer { background-color: var(--brand-blush); }
+.header:not(.transparent) .header-nav-main.nav > li > a,
+.header:not(.transparent) .header-bottom-nav.nav > li > a { color: var(--brand-charcoal); }
+.header:not(.transparent) .header-nav-main.nav > li > a:hover,
+.header:not(.transparent) .header-bottom-nav.nav > li > a:hover,
+.header:not(.transparent) .header-nav-main.nav > li.active > a,
+.header:not(.transparent) .header-bottom-nav.nav > li.active > a,
+.header:not(.transparent) .header-nav-main.nav > li.current > a,
+.header:not(.transparent) .header-bottom-nav.nav > li.current > a { color: var(--brand-green); }
+.header-nav-main.nav-line-bottom > li > a:before,
+.header-bottom-nav.nav-line-bottom > li > a:before,
+.is-divider { background-color: var(--brand-green); }
+
+/* Hồng là màu nhấn; chữ xanh đảm bảo tương phản trên nút và nhãn. */
+.button.primary:not(.is-outline),
+.current .breadcrumb-step, [data-icon-label]:after,
+.button#place_order, .button.checkout, .checkout-button,
+.single_add_to_cart_button.button, .sticky-add-to-cart-select-options-button,
+.badge-inner.on-sale,
+.header-main .header-search-form button.ux-search-submit,
+.header-main .cart-item [data-icon-label]::after,
+.ht-card-actions a.ht-card-btn--call, .badge .badge-inner,
+.ht-sticky-bar__call {
+  background-color: var(--brand-blush) !important;
+  border-color: var(--brand-blush) !important;
+  color: var(--brand-green) !important;
+}
+.button.primary:not(.is-outline):hover,
+.header-main .header-search-form button.ux-search-submit:hover,
+.ht-card-actions a.ht-card-btn--call:hover, .ht-sticky-bar__call:hover {
+  background-color: var(--brand-green) !important;
+  border-color: var(--brand-green) !important;
+  color: var(--brand-ivory) !important;
+}
+.button.ht-btn-ghost, .wrap .button.ht-btn-ghost {
+  background-color: var(--brand-ivory);
+  border-color: var(--brand-beige);
+  color: var(--brand-green);
+}
+.product-small .col-inner, .ht-cat-grid .box-category,
+.header-main .header-search-form form.searchform > .flex-row,
+.ht-sticky-bar, .nav-dropdown { background-color: var(--brand-ivory); }
+.product-small .price, .product-small .price-wrapper .price,
+ins .woocommerce-Price-amount { color: var(--brand-green); }
+.ht-cta .section-bg { background-color: var(--brand-green) !important; }
+.ht-cta-title { color: var(--brand-ivory); }
+.ht-cta-sub { color: var(--brand-ivory); }
+.ht-steps { background-color: var(--brand-beige); }
+.ht-step > .col-inner { background-color: var(--brand-ivory) !important; }
+.ht-foot-social a, .ht-foot-badge { background-color: var(--brand-ivory); color: var(--brand-green); }
+.ht-foot-social .ht-soc-zalo, .ht-foot-badge--plain { background-color: transparent; }
+.ht-foot-social a:hover { background-color: var(--brand-green); color: var(--brand-ivory); }
+.ht-foot-cinfo a:hover { color: var(--brand-charcoal); }

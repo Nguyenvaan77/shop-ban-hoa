@@ -1,0 +1,111 @@
+(function ($) {
+    /**
+     * Thu gọn / mở rộng mô tả danh mục dưới lưới sản phẩm.
+     *
+     * Chiều cao lúc thu gọn do CSS quy định, JS chỉ so scrollHeight với
+     * clientHeight nên không có hằng số nào bị lặp giữa hai bên.
+     */
+    function devvnTermDescription() {
+        $('.ht-term-desc').each(function () {
+            var $section = $(this),
+                $body = $section.find('.ht-term-desc__body'),
+                $button = $section.find('.ht-term-desc__more');
+
+            if (!$body.length || !$button.length) {
+                return;
+            }
+
+            if ($body[0].scrollHeight <= $body[0].clientHeight + 8) {
+                $section.addClass('is-short');
+                $button.remove();
+                return;
+            }
+
+            $button.on('click', function () {
+                var isOpen = $section.toggleClass('is-open').hasClass('is-open');
+                $button
+                    .attr('aria-expanded', isOpen ? 'true' : 'false')
+                    .find('span')
+                    .text(isOpen ? $button.data('less') : $button.data('more'));
+            });
+        });
+    }
+
+    /**
+     * Khối thiệp / băng chữ ở trang sản phẩm: bật tắt phần nhập, nút mẫu câu
+     * bấm-là-điền, đếm ký tự và xem trước nội dung.
+     */
+    function devvnGreeting() {
+        $('.ht-greeting').each(function () {
+            var $box = $(this),
+                $toggle = $box.find('.ht-greeting__toggle input'),
+                $inputs = $box.find('[data-key]');
+
+            function mirror() {
+                $inputs.each(function () {
+                    var key = this.dataset.key,
+                        value = $.trim(this.value);
+
+                    $box.find('[data-count="' + key + '"] b').text(value.length);
+                    $box.find('[data-pv="' + key + '"]')
+                        .text(value || this.placeholder || '')
+                        .toggleClass('is-empty', !value);
+                });
+            }
+
+            $toggle.on('change', function () {
+                $box.toggleClass('is-on', this.checked);
+            });
+
+            $inputs.on('input', mirror);
+
+            $box.on('click', '.ht-greeting__chip', function () {
+                var $chip = $(this);
+
+                $box.find('[data-key="' + $chip.data('fill') + '"]')
+                    .val($.trim($chip.text()))
+                    .trigger('input')
+                    .trigger('focus');
+            });
+
+            $box.toggleClass('is-on', $toggle.is(':checked'));
+            mirror();
+        });
+    }
+
+    $(document).ready(function () {
+        devvnTermDescription();
+        devvnGreeting();
+
+        //$('.product-info.summary .single_add_to_cart_button').html('<strong>Thêm vào giỏ</strong> <small>Cho vào giỏ để mua tiếp</small>');
+        /*if($('body span.added-to-cart').length > 0){
+            var e = $.magnificPopup.open ? 0 : 300;
+            e && $.magnificPopup.close(),
+                setTimeout(function () {
+                    if (matchMedia('only screen and (max-width: 849px)').matches) {
+                        $('body .header-cart-link.off-canvas-toggle').trigger('click');
+                    }
+                }, e);
+        }*/
+
+        $('body').on('click','#ftwp-container.ftwp-wrap #ftwp-header',function (e) {
+            e.preventDefault();
+            let buttonShow = $('button.ftwp-icon-collapse', this), parents = $(this).closest('nav#ftwp-contents');
+            $('div#ftwp-container-outer').css('height','auto');
+            parents.css('height','auto');
+            if ($('ol#ftwp-list', parents).is(':visible')){
+                $('ol#ftwp-list', parents).css('height','0');
+                $('ol#ftwp-list', parents).slideUp();
+                $(this).removeClass('active');
+                $('button#ftwp-header-minimize', this).removeClass('ftwp-icon-expand').addClass('ftwp-icon-collapse');
+
+            }else {
+                $('ol#ftwp-list', parents).css('height','auto');
+                $('ol#ftwp-list', parents).slideDown();
+                $(this).addClass('active');
+                $('button#ftwp-header-minimize', this).removeClass('ftwp-icon-collapse').addClass('ftwp-icon-expand');
+            }
+        });
+
+    });
+})(jQuery);

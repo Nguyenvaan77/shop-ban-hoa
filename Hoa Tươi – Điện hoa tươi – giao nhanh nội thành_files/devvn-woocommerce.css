@@ -1,0 +1,1293 @@
+/**
+ * DevVN — WooCommerce shop-flow skin for Flatsome: add-to-cart form, mini cart,
+ * cart, checkout and thank-you page.
+ *
+ * Button heights are always padding + line-height, never min-height. Flatsome's
+ * base button carries `min-height: 2.5em`, so a px min-height on top of it
+ * leaves the label off-centre and knocks neighbouring controls out of line.
+ *
+ * Self-contained and portable: it restyles WooCommerce's and Flatsome's own
+ * markup only — no template forks, no dependency on the rest of the theme's
+ * CSS. Drop the file into another Flatsome child theme, enqueue it, and retune
+ * the tokens below.
+ *
+ * Requires: images/icons/trash.svg and images/icons/check.svg
+ * (or override --scw-icon-trash / --scw-icon-check).
+ *
+ * @author Lê Văn Toản <https://levantoan.com/>
+ */
+
+/* ============================================================== TOKENS == */
+/* Brand colours come from Flatsome's own custom properties, so the skin
+   follows whatever primary colour the Customizer is set to. */
+
+:root {
+	--scw-primary: var(--fs-color-primary, #d6446e);
+	--scw-secondary: var(--fs-color-secondary, #ffbfd2);
+
+	/* Cannot be derived from the hex above — keep in sync when rebranding. */
+	--scw-primary-fade: rgba(214, 68, 110, .13);
+	--scw-primary-glow: rgba(214, 68, 110, .28);
+
+	--scw-ink: #2b2430;
+	--scw-body: #6d6572;
+	--scw-muted: #99919f;
+
+	--scw-page-bg: #fffaf7;
+	--scw-tint: #fff6f8;
+	--scw-tint-strong: #ffedf2;
+	--scw-line: #f2e4e9;
+	--scw-line-soft: #ffdce6;
+
+	--scw-radius: 16px;
+	--scw-radius-sm: 10px;
+	--scw-shadow: 0 4px 18px rgba(46, 42, 51, .07);
+	--scw-shadow-pop: 0 18px 44px rgba(46, 42, 51, .18);
+
+	/* Relative to THIS file, so no domain or theme path ends up in the DB. */
+	--scw-icon-trash: url("../images/icons/trash.svg");
+	--scw-icon-check: url("../images/icons/check.svg");
+}
+
+/* ====================================================== SINGLE PRODUCT == */
+/* Flatsome already lays `form.cart` out as a flex row, so only the controls
+   themselves need work. */
+
+.single-product form.cart {
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.single-product form.cart .ux-quantity.quantity {
+	--scw-qty-h: 46px;
+	margin: 0;
+}
+
+.single-product form.cart .ux-quantity input.ux-quantity__button {
+	width: 40px;
+}
+
+.single-product form.cart .ux-quantity input.qty {
+	width: 46px;
+	font-size: 15px;
+}
+
+/* Height from padding + line-height so it lands on the same baseline as the
+   stepper next to it — a px min-height against Flatsome's em one would not. */
+.single-product form.cart .single_add_to_cart_button,
+.single-product form.cart .ux-buy-now-button {
+	margin: 0;
+	padding: 14px 26px;
+	line-height: 1.3;
+	border-radius: 99px;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: .01em;
+	text-transform: none;
+}
+
+/* Two identical pink buttons read as one choice made twice. Add to cart stays
+   the filled primary — Flatsome's generated Customizer CSS pins its background
+   with `!important`, so inverting that one would take an !important of our own
+   — and buy now becomes the outlined shortcut beside it. */
+.single-product form.cart .single_add_to_cart_button {
+	border: 1px solid transparent;
+	color: #fff;
+	box-shadow: 0 8px 20px var(--scw-primary-glow);
+}
+
+.single-product form.cart .single_add_to_cart_button:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 12px 26px var(--scw-primary-glow);
+}
+
+.single-product form.cart .ux-buy-now-button {
+	border: 1px solid var(--scw-primary);
+	background-color: #fff;
+	color: var(--scw-primary);
+	box-shadow: none;
+}
+
+.single-product form.cart .ux-buy-now-button:hover {
+	background-color: var(--scw-tint);
+	color: var(--scw-primary);
+}
+
+/* =========================================================== MINI CART == */
+
+li.cart-item > .nav-dropdown {
+	display: block;
+	width: 340px;
+	min-width: 340px;
+	padding: 0;
+	border: 0;
+	border-radius: 14px;
+	background-color: #fff;
+	box-shadow: var(--scw-shadow-pop);
+	overflow: hidden;
+}
+
+li.cart-item > .nav-dropdown > li.html {
+	min-width: 0;
+	padding: 0;
+}
+
+/* Printed on `woocommerce_before_mini_cart` — a CSS content: string could not
+   be translated. */
+.htw-minicart-head {
+	margin: 0;
+	padding: 15px 18px 13px;
+	border-bottom: 1px solid var(--scw-line);
+	font-size: 15px;
+	font-weight: 800;
+	color: var(--scw-ink);
+}
+
+.widget_shopping_cart ul.product_list_widget {
+	max-height: 46vh;
+	margin: 0;
+}
+
+/* Flatsome positions the thumbnail absolutely and reserves room with the row's
+   own left padding — keep that model, just resize it. */
+.widget_shopping_cart ul.product_list_widget li {
+	min-height: 0;
+	padding: 14px 42px 14px 86px;
+	border: 0;
+}
+
+.widget_shopping_cart ul.product_list_widget li + li {
+	border-top: 1px solid var(--scw-line);
+}
+
+.widget_shopping_cart ul.product_list_widget li img {
+	top: 7px;
+	left: 16px;
+	width: 58px;
+	height: 58px;
+	margin: 0;
+	border: 1px solid var(--scw-line);
+	border-radius: var(--scw-radius-sm);
+}
+
+.widget_shopping_cart ul.product_list_widget li a:not(.remove) {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	margin-bottom: 0;
+	font-size: 13.5px;
+	font-weight: 600;
+	line-height: 1.45;
+	color: var(--scw-ink);
+	text-overflow: clip;
+}
+
+.widget_shopping_cart ul.product_list_widget li a:not(.remove):hover {
+	color: var(--scw-primary);
+}
+
+.widget_shopping_cart .ux-mini-cart-qty {
+	margin: 6px 0 0;
+}
+
+.widget_shopping_cart .ux-mini-cart-qty .quantity {
+	font-size: 12.5px;
+	color: #99919f;
+	opacity: 1;
+}
+
+.widget_shopping_cart .ux-mini-cart-qty .amount {
+	font-size: 14.5px;
+	font-weight: 800;
+	color: var(--scw-primary);
+}
+
+.widget_shopping_cart .ux-mini-cart-footer {
+	padding: 14px 16px 16px;
+	border-top: 1px solid var(--scw-line);
+	background-color: var(--scw-tint);
+}
+
+.widget_shopping_cart p.total {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin: 0 0 12px;
+	padding: 0;
+	border: 0;
+	font-size: 13px;
+	text-align: left;
+}
+
+.widget_shopping_cart p.total strong {
+	font-weight: 600;
+	color: var(--scw-body);
+}
+
+.widget_shopping_cart p.total .amount {
+	font-size: 17px;
+	font-weight: 800;
+	color: var(--scw-primary);
+}
+
+.widget_shopping_cart .woocommerce-mini-cart__buttons {
+	display: flex;
+	gap: 8px;
+	margin: 0;
+}
+
+.widget_shopping_cart .woocommerce-mini-cart__buttons .button {
+	flex: 1 1 0;
+	width: auto;
+	min-width: 0;
+	margin: 0;
+	padding: 0 8px;
+	border-radius: 99px;
+	font-size: 12.5px;
+	letter-spacing: .01em;
+	text-transform: none;
+	white-space: nowrap;
+}
+
+.widget_shopping_cart .woocommerce-mini-cart__buttons .button:not(.checkout) {
+	border: 1px solid var(--scw-line-soft);
+	background-color: #fff;
+	color: var(--scw-primary);
+}
+
+.widget_shopping_cart .woocommerce-mini-cart__buttons .button:not(.checkout):hover {
+	border-color: var(--scw-primary);
+	background-color: var(--scw-tint);
+}
+
+/* ------------------------------------------------------ empty mini cart -- */
+
+.widget_shopping_cart .ux-mini-cart-empty {
+	padding: 26px 20px 24px;
+}
+
+.widget_shopping_cart .ux-mini-cart-empty-icon {
+	line-height: 0;
+	color: var(--scw-primary);
+}
+
+/* The SVG ships inline `opacity:.1;height:80px` — only !important reaches it. */
+.widget_shopping_cart .ux-mini-cart-empty-icon svg {
+	height: 58px !important;
+	opacity: .25 !important;
+}
+
+.widget_shopping_cart .woocommerce-mini-cart__empty-message {
+	margin: 14px 0 16px;
+	font-size: 13.5px;
+	color: var(--scw-body);
+}
+
+.widget_shopping_cart .return-to-shop {
+	margin: 0;
+}
+
+/* ============================================ CART / CHECKOUT SHELL == */
+
+.woocommerce-cart #content,
+.woocommerce-checkout #content,
+.page-checkout-simple {
+	background-color: var(--scw-page-bg) !important;
+}
+
+.woocommerce-cart .checkout-breadcrumbs,
+.woocommerce-checkout .checkout-breadcrumbs {
+	margin-bottom: 22px;
+}
+
+/* `.row-divided` paints a rule between the columns; the cards replace it. */
+.woocommerce-cart .row-divided > .col + .col,
+.woocommerce-cart .row-divided > div + div {
+	border-left: 0;
+}
+
+.woocommerce-cart .cart-wrapper,
+.woocommerce-cart .cart-sidebar,
+.woocommerce-checkout #customer_details,
+.woocommerce-checkout .checkout-sidebar {
+	padding: 22px 24px;
+	border-radius: var(--scw-radius);
+	background-color: #fff;
+	box-shadow: var(--scw-shadow);
+}
+
+/* Flatsome's own sidebar chrome would double up on the card. */
+.woocommerce-checkout .large-5 .col-inner.is-well,
+.woocommerce-checkout .large-5 .col-inner.has-border {
+	padding: 0;
+	border: 0;
+	background-color: transparent;
+}
+
+/* ------------------------------------------------------------ empty cart -- */
+
+/* The message and the button are siblings — card the wrapper so they read as
+   one panel instead of a floating notice with a stray button below it. */
+.woocommerce-cart .woocommerce > .text-center {
+	max-width: 520px;
+	margin: 0 auto;
+	padding: 36px 24px 34px;
+	border-radius: var(--scw-radius);
+	background-color: #fff;
+	box-shadow: var(--scw-shadow);
+}
+
+.woocommerce-cart .wc-empty-cart-message {
+	margin: 0 0 20px;
+}
+
+.woocommerce-cart .wc-empty-cart-message .woocommerce-info {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: transparent;
+	font-size: 15px;
+	color: var(--scw-body);
+}
+
+.woocommerce-cart .wc-empty-cart-message .message-container {
+	max-width: none;
+	padding: 0;
+}
+
+.woocommerce-cart .return-to-shop {
+	margin: 0;
+}
+
+/* Shared by the empty cart page and the empty mini cart. */
+.woocommerce-cart .return-to-shop .button,
+.widget_shopping_cart .return-to-shop .button {
+	padding: 14px 26px;
+	line-height: 1.3;
+	border-radius: 99px;
+	font-size: 14px;
+	letter-spacing: .01em;
+	text-transform: none;
+	box-shadow: 0 8px 20px var(--scw-primary-glow);
+}
+
+/* ======================================== FREE SHIPPING PROGRESS BAR == */
+
+.ux-free-shipping {
+	margin-bottom: 20px;
+}
+
+.ux-free-shipping__notice {
+	margin-bottom: 9px;
+	font-size: 13.5px;
+	line-height: 1.5;
+	color: var(--scw-body);
+}
+
+.ux-free-shipping__notice .amount {
+	font-weight: 800;
+	color: var(--scw-primary);
+}
+
+.ux-free-shipping__bar {
+	height: 8px;
+	border-radius: 99px;
+	background-color: var(--scw-tint-strong);
+	overflow: hidden;
+}
+
+.ux-free-shipping__bar-progress {
+	border-radius: 99px;
+	background-image: linear-gradient(90deg, var(--scw-secondary), var(--scw-primary));
+}
+
+/* ============================================================ CART TABLE == */
+
+.shop_table.cart {
+	margin: 0;
+	border: 0;
+}
+
+.shop_table.cart thead th {
+	padding: 0 10px 12px;
+	border-bottom: 1px solid var(--scw-line);
+	font-size: 11.5px;
+	font-weight: 700;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	color: var(--scw-muted);
+}
+
+.shop_table.cart thead th.product-name {
+	padding-left: 0;
+}
+
+.shop_table.cart thead th.product-subtotal {
+	padding-right: 0;
+	text-align: right;
+}
+
+.shop_table.cart tbody td {
+	padding: 18px 10px;
+	border-bottom: 1px solid var(--scw-line);
+	vertical-align: middle;
+}
+
+.shop_table.cart td.product-remove {
+	width: 40px;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.shop_table.cart td.product-thumbnail {
+	width: 92px;
+	padding-left: 0;
+}
+
+.shop_table.cart td.product-thumbnail img {
+	width: 76px;
+	height: 76px;
+	border: 1px solid var(--scw-line);
+	border-radius: 12px;
+	object-fit: cover;
+}
+
+.shop_table.cart td.product-name a {
+	font-size: 14.5px;
+	font-weight: 700;
+	line-height: 1.45;
+	color: var(--scw-ink);
+}
+
+.shop_table.cart td.product-name a:hover {
+	color: var(--scw-primary);
+}
+
+.shop_table.cart td.product-price {
+	font-size: 14px;
+	color: var(--scw-body);
+}
+
+.shop_table.cart td.product-subtotal {
+	padding-right: 0;
+	font-size: 15px;
+	font-weight: 800;
+	text-align: right;
+	color: var(--scw-primary);
+}
+
+.shop_table.cart td.actions {
+	padding: 20px 0 0;
+	border-bottom: 0;
+}
+
+/* Quantity stepper — one pill instead of three loose boxes. Unscoped so the
+   cart and the single-product form share it; `--scw-qty-h` sets the height per
+   context. The buttons take their height from line-height, never min-height:
+   Flatsome's base `min-height: 2.5em` is em-based and would fight a px height,
+   pushing the glyph off-centre. */
+.ux-quantity.quantity {
+	--scw-qty-h: 38px;
+	display: inline-flex;
+	align-items: center;
+	width: auto;
+	border: 1px solid var(--scw-line);
+	border-radius: var(--scw-radius-sm);
+	background-color: #fff;
+	overflow: hidden;
+}
+
+/* `input` is in the selector on purpose: Flatsome's `input[type=button].is-form`
+   sets a 1px border, and a class-only selector loses to it. */
+.ux-quantity input.ux-quantity__button {
+	width: 34px;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background-color: transparent;
+	box-shadow: none;
+	font-size: 17px;
+	line-height: var(--scw-qty-h);
+	color: var(--scw-body);
+}
+
+.ux-quantity input.ux-quantity__button:hover {
+	background-color: var(--scw-tint);
+	color: var(--scw-primary);
+}
+
+/* An `input` cannot be sized by line-height the way a button can. */
+.ux-quantity input.qty {
+	width: 42px;
+	height: var(--scw-qty-h);
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background-color: transparent;
+	box-shadow: none;
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--scw-ink);
+}
+
+/* ====================================================== COUPON / ACTIONS == */
+
+.woocommerce-cart .coupon .widget-title {
+	margin-bottom: 10px;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: .02em;
+	text-transform: none;
+	color: var(--scw-ink);
+}
+
+.woocommerce-cart .coupon .widget-title i {
+	margin-right: 6px;
+	color: var(--scw-primary);
+}
+
+/* Padding + line-height are tuned so the button lands exactly on the 46px
+   coupon input beside it. */
+.woocommerce-cart .coupon button {
+	margin: 0;
+	padding: 12px 22px;
+	line-height: 1.4;
+	border-radius: var(--scw-radius-sm);
+	font-size: 13px;
+	letter-spacing: .01em;
+	text-transform: none;
+}
+
+.woocommerce-cart .continue-shopping {
+	margin-top: 18px;
+}
+
+.woocommerce-cart .button-continue-shopping {
+	padding: 5px 10px;
+    line-height: 1.3;
+	border-radius: 99px;
+	font-size: 13px;
+	letter-spacing: .01em;
+	text-transform: none;
+}
+
+/* ======================================================= TOTALS SIDEBAR == */
+
+/* On the cart, Flatsome hides the `h2` and shows the first table's `th`
+   instead — style both so the heading looks right either way. */
+.cart_totals h2,
+.cart_totals > table:first-child thead th,
+.woocommerce-checkout #order_review_heading {
+	margin: 0 0 16px;
+	padding: 0;
+	border: 0;
+	font-size: 16px;
+	font-weight: 800;
+	letter-spacing: .01em;
+	text-align: left;
+	text-transform: none;
+	color: var(--scw-ink);
+}
+
+.cart_totals .shop_table,
+.woocommerce-checkout-review-order-table {
+	margin: 0;
+	border: 0;
+	font-size: 14px;
+}
+
+.cart_totals .shop_table th,
+.cart_totals .shop_table td,
+.woocommerce-checkout-review-order-table th,
+.woocommerce-checkout-review-order-table td {
+	padding: 11px 0;
+	border: 0;
+	border-bottom: 1px dashed var(--scw-line);
+	font-weight: 500;
+	color: var(--scw-body);
+	vertical-align: top;
+}
+
+.cart_totals .shop_table th,
+.woocommerce-checkout-review-order-table th {
+	letter-spacing: 0;
+	text-align: left;
+	text-transform: none;
+}
+
+.cart_totals .shop_table td,
+.woocommerce-checkout-review-order-table td {
+	text-align: right;
+	color: var(--scw-ink);
+}
+
+/* The line-item name is a `td` in the review table — keep it reading left. */
+.woocommerce-checkout-review-order-table tbody td.product-name {
+	text-align: left;
+	font-weight: 600;
+	color: var(--scw-ink);
+}
+
+.woocommerce-checkout-review-order-table tbody td.product-name .product-quantity {
+	font-weight: 500;
+	color: var(--scw-muted);
+}
+
+.woocommerce-checkout-review-order-table thead th {
+	border-bottom: 1px solid var(--scw-line);
+	font-size: 11.5px;
+	font-weight: 700;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	color: var(--scw-muted);
+}
+
+.cart_totals .order-total th,
+.cart_totals .order-total td,
+.woocommerce-checkout-review-order-table tfoot .order-total th,
+.woocommerce-checkout-review-order-table tfoot .order-total td {
+	padding-top: 14px;
+	border-bottom: 0;
+	font-size: 15px;
+	font-weight: 800;
+	color: var(--scw-ink);
+}
+
+.cart_totals .order-total td .amount,
+.woocommerce-checkout-review-order-table tfoot .order-total td .amount {
+	font-size: 20px;
+	font-weight: 800;
+	color: var(--scw-primary);
+}
+
+/* Shipping row: the cell holds a nested table, so reset it and lay the method,
+   the destination note and the calculator link out as one stacked block. */
+.cart_totals .shipping__inner {
+	padding: 11px 0;
+}
+
+.cart_totals .shipping__table {
+	width: 100%;
+	margin: 0;
+	border: 0;
+}
+
+.cart_totals .shipping__table th,
+.cart_totals .shipping__table td {
+	padding: 0;
+	border: 0;
+	vertical-align: top;
+}
+
+.cart_totals .shipping__table th {
+	width: 38%;
+}
+
+.cart_totals .shipping__list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cart_totals .shipping__list_item {
+	margin: 0;
+	list-style: none;
+}
+
+.cart_totals .shipping__list_label {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--scw-ink);
+}
+
+.cart_totals .woocommerce-shipping-destination {
+	margin: 6px 0 0;
+	font-size: 12.5px;
+	line-height: 1.55;
+	color: var(--scw-muted);
+}
+
+.cart_totals .shipping-calculator-button {
+	display: inline-block;
+	margin-top: 6px;
+	font-size: 12.5px;
+	font-weight: 600;
+}
+
+.wc-proceed-to-checkout {
+	padding: 18px 0 0;
+}
+
+.wc-proceed-to-checkout .checkout-button,
+.woocommerce-checkout #place_order {
+	display: block;
+	width: 100%;
+	padding: 15px 10px;
+    line-height: 1.3;
+	margin: 0;
+	border-radius: 99px;
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: .02em;
+	text-transform: none;
+	box-shadow: 0 8px 20px var(--scw-primary-glow);
+}
+
+.wc-proceed-to-checkout .checkout-button:hover,
+.woocommerce-checkout #place_order:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 12px 26px var(--scw-primary-glow);
+}
+
+/* ======================================================== CHECKOUT FORM == */
+
+.woocommerce-checkout #customer_details h3,
+.woocommerce-checkout #ship-to-different-address {
+	margin: 0 0 18px;
+	padding: 0;
+	border: 0;
+	font-size: 16px;
+	font-weight: 800;
+	letter-spacing: .01em;
+	text-transform: none;
+	color: var(--scw-ink);
+}
+
+/* Flatsome puts a 2px rule above the billing block; the card frames it now. */
+.woocommerce-checkout .woocommerce-billing-fields {
+	padding-top: 0;
+	border-top: 0;
+}
+
+.woocommerce-checkout .woocommerce-shipping-fields {
+	margin-top: 24px;
+	padding-top: 22px;
+	border-top: 1px dashed var(--scw-line);
+}
+
+/* Shipping + additional fields sit next to each other — one rule between the
+   two blocks is enough, a second reads as a stray line. */
+.woocommerce-checkout .woocommerce-additional-fields {
+	margin-top: 20px;
+	padding-top: 0;
+	border-top: 0;
+}
+
+.woocommerce-checkout .form-row {
+	margin-bottom: 16px;
+	padding: 0;
+}
+
+.woocommerce-checkout .form-row label {
+	display: block;
+	margin-bottom: 7px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--scw-ink);
+}
+
+.woocommerce-checkout .form-row .required {
+	color: var(--scw-primary);
+	text-decoration: none;
+}
+
+/* `background-color`, never the `background` shorthand — the shorthand wipes
+   the native select arrow. */
+.woocommerce-cart .coupon input.input-text,
+.woocommerce-checkout .form-row input.input-text,
+.woocommerce-checkout .form-row textarea,
+.woocommerce-checkout .form-row select {
+	border: 1px solid var(--scw-line);
+	border-radius: var(--scw-radius-sm);
+	background-color: #fff;
+	box-shadow: none;
+	font-size: 14px;
+	color: var(--scw-ink);
+}
+
+.woocommerce-cart .coupon input.input-text,
+.woocommerce-checkout .form-row input.input-text,
+.woocommerce-checkout .form-row select {
+	height: 46px;
+	margin: 0;
+	padding: 0 15px;
+}
+
+.woocommerce-checkout .form-row textarea {
+	min-height: 104px;
+	padding: 12px 15px;
+	line-height: 1.6;
+}
+
+.woocommerce-cart .coupon input.input-text:focus,
+.woocommerce-checkout .form-row input.input-text:focus,
+.woocommerce-checkout .form-row textarea:focus,
+.woocommerce-checkout .form-row select:focus {
+	border-color: var(--scw-primary);
+	box-shadow: 0 0 0 3px var(--scw-primary-fade);
+}
+
+.woocommerce-checkout .form-row.woocommerce-invalid input.input-text {
+	border-color: #e35d6a;
+}
+
+.woocommerce-checkout .woocommerce-form__label-for-checkbox {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--scw-ink);
+}
+
+/* ========================================================= PAYMENT BOX == */
+
+.woocommerce-checkout #payment {
+	margin-top: 18px;
+	padding: 0;
+	border-radius: 0;
+	background-color: transparent;
+}
+
+.woocommerce-checkout #payment ul.payment_methods {
+	margin: 0 0 16px;
+	padding: 0;
+	border: 0;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li {
+	margin: 0 0 8px;
+	padding: 13px 15px;
+	border: 1px solid var(--scw-line);
+	border-radius: 12px;
+	background-color: #fff;
+	list-style: none;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li label {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--scw-ink);
+}
+
+.woocommerce-checkout #payment .payment_box {
+	margin: 8px 0 0;
+	padding: 0;
+	background-color: transparent;
+	font-size: 13px;
+	color: var(--scw-body);
+}
+
+.woocommerce-checkout #payment .payment_box::before {
+	display: none;
+}
+
+/* Coupon toggle bar above the two columns. */
+.woocommerce-checkout .woocommerce-form-coupon-toggle .woocommerce-info {
+	margin: 0 0 18px;
+	padding: 13px 18px;
+	border: 1px solid var(--scw-line-soft);
+	border-radius: 12px;
+	background-color: var(--scw-tint);
+	font-size: 13.5px;
+	color: var(--scw-body);
+}
+
+.woocommerce-checkout .woocommerce-form-coupon-toggle .message-container {
+	max-width: none;
+	padding: 0;
+}
+
+.woocommerce-checkout .checkout_coupon {
+	margin: 0 0 18px;
+	padding: 18px 20px;
+	border: 1px solid var(--scw-line);
+	border-radius: 12px;
+	background-color: #fff;
+}
+
+.woocommerce-checkout .woocommerce-privacy-policy-text {
+	margin-top: 16px;
+	font-size: 12.5px;
+	line-height: 1.65;
+	color: #99919f;
+}
+
+.woocommerce-checkout-review-order-table td.shipping__inner td, .woocommerce-checkout-review-order-table td.shipping__inner th {
+    border: 0;
+    padding-bottom: 0;
+}
+.is-well {
+    box-shadow: none !important;
+}
+.woocommerce-checkout-review-order-table td.shipping__inner td {
+    padding-top: 0;
+}
+
+/* ==================================================== THANK YOU PAGE == */
+/* `.woocommerce-order` scopes the whole block, so nothing here can leak into
+   the checkout form that shares the same page template and body class. */
+
+/* Flatsome's columns ship a 30px padding-bottom; the cards space themselves. */
+.woocommerce-order.row > .col {
+	padding-bottom: 0;
+}
+
+.woocommerce-order .woocommerce-order-details,
+.woocommerce-order .woocommerce-customer-details,
+.woocommerce-order .large-5 .col-inner {
+	margin-bottom: 22px;
+	padding: 24px;
+	border-radius: var(--scw-radius);
+	background-color: #fff;
+	box-shadow: var(--scw-shadow);
+}
+
+/* The sidebar column inherits Flatsome's `.is-well`; the card replaces it. */
+.woocommerce-order .large-5 .col-inner.is-well {
+	padding: 30px 24px 24px;
+	border: 0;
+	background-color: #fff;
+}
+
+.woocommerce-order .woocommerce-order-details__title,
+.woocommerce-order .woocommerce-column__title {
+	margin: 0 0 16px;
+	padding: 0;
+	border: 0;
+	font-size: 16px;
+	font-weight: 800;
+	letter-spacing: .01em;
+	text-transform: none;
+	color: var(--scw-ink);
+}
+
+/* Payment instructions ("Trả tiền mặt khi giao hàng.") sit alone above the
+   order details — give them the shape of a note instead of a stray line. */
+.woocommerce-order > .large-7 > p {
+	margin: 0 0 22px;
+	padding: 13px 18px;
+	border: 1px solid var(--scw-line-soft);
+	border-radius: 12px;
+	background-color: var(--scw-tint);
+	font-size: 13.5px;
+	line-height: 1.6;
+	color: var(--scw-body);
+}
+
+/* --------------------------------------------------- confirmation card -- */
+
+.woocommerce-order .woocommerce-thankyou-order-received {
+	position: relative;
+	margin: 0 0 20px;
+	padding: 74px 0 0;
+	font-size: 17px;
+	font-weight: 800;
+	line-height: 1.5;
+	text-align: center;
+	color: var(--scw-ink) !important;
+}
+
+.woocommerce-order .woocommerce-thankyou-order-received strong {
+	font-weight: 800;
+}
+
+/* Badge is two layers: a tinted disc plus the tick on top, because a mask
+   would clip the element's own background away. */
+.woocommerce-order .woocommerce-thankyou-order-received::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 58px;
+	height: 58px;
+	border-radius: 50%;
+	background-color: var(--scw-tint-strong);
+	transform: translateX(-50%);
+}
+
+.woocommerce-order .woocommerce-thankyou-order-received::after {
+	content: "";
+	position: absolute;
+	top: 16px;
+	left: 50%;
+	width: 26px;
+	height: 26px;
+	background-color: var(--scw-primary);
+	-webkit-mask: var(--scw-icon-check) center/contain no-repeat;
+	mask: var(--scw-icon-check) center/contain no-repeat;
+	transform: translateX(-50%);
+}
+
+/* Each `li` is "Label: <strong>value</strong>" — the bare label text becomes
+   its own flex item, so space-between splits the row without extra markup. */
+.woocommerce-order ul.woocommerce-order-overview {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+}
+
+.woocommerce-order ul.woocommerce-order-overview li {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 14px;
+	margin: 0;
+	padding: 11px 0;
+	border: 0;
+	border-bottom: 1px dashed var(--scw-line);
+	font-size: 13.5px;
+	text-transform: none;
+	color: var(--scw-body);
+}
+
+.woocommerce-order ul.woocommerce-order-overview li:last-child {
+	border-bottom: 0;
+}
+
+.woocommerce-order ul.woocommerce-order-overview li strong {
+	font-size: 14px;
+	font-weight: 700;
+	text-align: right;
+	color: var(--scw-ink);
+	overflow-wrap: anywhere;
+}
+
+/* `.amount` carries its own colour, so the `strong` alone is not enough. */
+.woocommerce-order ul.woocommerce-order-overview li.total strong,
+.woocommerce-order ul.woocommerce-order-overview li.total strong .amount {
+	font-size: 18px;
+	font-weight: 800;
+	color: var(--scw-primary);
+}
+
+/* ------------------------------------------------------ order details -- */
+
+.woocommerce-order .shop_table.order_details {
+	width: 100%;
+	margin: 0;
+	border: 0;
+	font-size: 14px;
+}
+
+.woocommerce-order .shop_table.order_details th,
+.woocommerce-order .shop_table.order_details td {
+	padding: 12px 0;
+	border: 0;
+	border-bottom: 1px dashed var(--scw-line);
+	font-weight: 500;
+	color: var(--scw-body);
+	vertical-align: top;
+}
+
+.woocommerce-order .shop_table.order_details thead th {
+	padding-top: 0;
+	padding-bottom: 12px;
+	border-bottom: 1px solid var(--scw-line);
+	font-size: 11.5px;
+	font-weight: 700;
+	letter-spacing: .08em;
+	text-align: left;
+	text-transform: uppercase;
+	color: var(--scw-muted);
+}
+
+.woocommerce-order .shop_table.order_details thead th:last-child,
+.woocommerce-order .shop_table.order_details td {
+	text-align: right;
+}
+
+.woocommerce-order .shop_table.order_details tbody td.product-name,
+.woocommerce-order .shop_table.order_details tfoot th {
+	text-align: left;
+}
+
+.woocommerce-order .shop_table.order_details tbody td.product-name {
+	font-weight: 600;
+	color: var(--scw-ink);
+}
+
+.woocommerce-order .shop_table.order_details tbody td.product-name a {
+	color: var(--scw-ink);
+}
+
+.woocommerce-order .shop_table.order_details tbody td.product-name a:hover {
+	color: var(--scw-primary);
+}
+
+.woocommerce-order .shop_table.order_details .product-quantity {
+	font-weight: 500;
+	color: var(--scw-muted);
+}
+
+.woocommerce-order .shop_table.order_details tfoot tr:last-child th,
+.woocommerce-order .shop_table.order_details tfoot tr:last-child td {
+	border-bottom: 0;
+}
+
+/* The order-total row is the one number the customer looks for. WooCommerce
+   prints these rows with no class, so the hook is the `.htw-order-total` span
+   added by `woocommerce_get_order_item_totals` (inc/woocommerce.php). Counting
+   positions instead would break as soon as shipping, a coupon or a customer
+   note changes the row count. Without the filter the rows just stay uniform. */
+.woocommerce-order .shop_table.order_details tfoot tr:has(.htw-order-total) th,
+.woocommerce-order .shop_table.order_details tfoot tr:has(.htw-order-total) td {
+	font-size: 15px;
+	font-weight: 800;
+	color: var(--scw-ink);
+}
+
+.woocommerce-order .htw-order-total .amount {
+	font-size: 19px;
+	font-weight: 800;
+	color: var(--scw-primary);
+}
+
+/* --------------------------------------------------- customer details -- */
+
+.woocommerce-order .woocommerce-customer-details .col2-set {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 22px;
+	margin: 0;
+}
+
+.woocommerce-order .woocommerce-customer-details .woocommerce-column {
+	flex: 1 1 220px;
+	width: auto;
+	max-width: none;
+	margin: 0;
+	padding: 18px 20px;
+	border: 1px solid var(--scw-line);
+	border-radius: 12px;
+	background-color: var(--scw-tint);
+}
+
+.woocommerce-order .woocommerce-customer-details address {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 14px;
+	font-style: normal;
+	line-height: 1.75;
+	color: var(--scw-body);
+}
+
+.woocommerce-order .woocommerce-customer-details address p {
+	margin: 0;
+}
+
+#billing_country_field,
+#shipping_country_field{
+    display: none !important;
+}
+
+.mfp-content.off-canvas-cart .inner-padding ul.woocommerce-mini-cart.cart_list.product_list_widget {
+    margin-left: -25px;
+    margin-right: -25px;
+}
+
+/* ============================================================ RESPONSIVE == */
+
+@media screen and (min-width: 850px){
+	.cart-collaterals {
+		padding-left: 15px !important;
+	}
+	.woocommerce.row.row-large.row-divided .col.large-7 {
+		padding-right: 10px;
+	}
+}
+
+@media (max-width: 849px) {
+	.woocommerce-cart .cart-wrapper,
+	.woocommerce-cart .cart-sidebar,
+	.woocommerce-checkout #customer_details,
+	.woocommerce-checkout .checkout-sidebar {
+		padding: 18px 16px;
+	}
+
+	.woocommerce-cart .cart-sidebar {
+		margin-top: 18px;
+	}
+}
+
+@media (max-width: 549px) {
+	li.cart-item > .nav-dropdown {
+		width: 300px;
+		min-width: 300px;
+	}
+
+	/* Flatsome already drops the price/subtotal columns here and moves the price
+	   under the name — tighten that layout instead of rebuilding it. */
+	.shop_table.cart thead th {
+		font-size: 10.5px;
+		letter-spacing: .05em;
+	}
+
+	.shop_table.cart tbody td {
+		padding: 14px 0;
+	}
+
+	.shop_table.cart td.product-thumbnail {
+		width: 68px;
+	}
+
+	.shop_table.cart td.product-thumbnail img {
+		width: 58px;
+		height: 58px;
+	}
+
+	.shop_table.cart td.product-name {
+		padding-left: 12px;
+		padding-right: 10px;
+		text-align: left;
+	}
+
+	.shop_table.cart td.product-name .mobile-product-price {
+		margin-top: 4px;
+		font-size: 13px;
+		font-weight: 700;
+		color: var(--scw-primary);
+	}
+
+	.shop_table.cart td.product-remove {
+		width: 30px;
+	}
+
+	.woocommerce-cart .ux-quantity input.ux-quantity__button {
+		width: 28px;
+	}
+
+	.woocommerce-cart .ux-quantity input.qty {
+		width: 34px;
+	}
+
+	.single-product form.cart .single_add_to_cart_button,
+	.single-product form.cart .ux-buy-now-button {
+		flex: 1 1 140px;
+		padding-left: 14px;
+		padding-right: 14px;
+	}
+
+	/* Confirmation comes before the paperwork once the columns stack. */
+	.woocommerce-order.row > .large-5 {
+		order: -1;
+	}
+
+	.woocommerce-order .woocommerce-order-details,
+	.woocommerce-order .woocommerce-customer-details,
+	.woocommerce-order .large-5 .col-inner,
+	.woocommerce-order .large-5 .col-inner.is-well {
+		padding: 20px 16px;
+	}
+
+	.woocommerce-order .woocommerce-customer-details .col2-set {
+		gap: 14px;
+	}
+}
