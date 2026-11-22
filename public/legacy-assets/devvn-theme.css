@@ -1,0 +1,2911 @@
+/**
+ * Hoa Tươi — lớp design cho Flatsome child theme.
+ *
+ * Bám theo file thiết kế layouts/trang chu.png: nền trắng, phẳng, viền mảnh 1px
+ * thay cho đổ bóng, icon nét mảnh, tiêu đề xanh rừng đậm, nhấn hồng.
+ * Chỉ chứa những gì option/utility của Flatsome không diễn đạt được.
+ */
+
+/* ============================================================ 0. TOKENS == */
+
+:root {
+	--ht-green: #16302a;
+	--ht-ink: #2f2f31;
+	--ht-body: #5f5f61;
+	--ht-mute: #8f8f92;
+	--ht-bg: #ffffff;
+	--ht-bg-soft: #fafafa;
+	--ht-blush-50: #fdf6f8;
+	--ht-blush-100: #fcf3f5;
+	--ht-blush-200: #f8dde4;
+	--ht-blush-300: #f3c3ce;
+	--ht-line: #ececee;
+	--ht-line-soft: #f4f4f5;
+	--ht-radius: 14px;
+	--ht-radius-sm: 12px;
+	/* Font tiêu đề mục — cặp serif/sans lấy từ file thiết kế. */
+	--ht-display: 'Be Vietnam Pro', "Playfair Display", "Times New Roman", serif;
+	/* Chân trang */
+	--ht-foot-bg: #fdf5f8;
+	--ht-foot-line: #f6e2e9;
+	--ht-foot-title: #3a3844;
+	--ht-foot-body: #6b6673;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	background-color: var(--ht-bg);
+}
+
+/* ================================================= 1. MASK ICON SYSTEM == */
+/* Icon nét mảnh dùng CSS mask nên kế thừa màu chữ; đường dẫn tương đối với file
+   CSS để đổi domain hay đổi tên theme đều không hỏng. */
+
+.ht-i {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	flex: none;
+	vertical-align: -.14em;
+	background-color: currentColor;
+	-webkit-mask: var(--ht-icon) center/contain no-repeat;
+	mask: var(--ht-icon) center/contain no-repeat;
+}
+
+.ht-i-phone {
+	--ht-icon: url("../images/icons/phone.svg");
+}
+
+.ht-i-truck {
+	--ht-icon: url("../images/icons/truck.svg");
+}
+
+.ht-i-clock {
+	--ht-icon: url("../images/icons/clock.svg");
+}
+
+.ht-i-invoice {
+	--ht-icon: url("../images/icons/invoice.svg");
+}
+
+.ht-i-palette {
+	--ht-icon: url("../images/icons/palette.svg");
+}
+
+.ht-i-blossom {
+	--ht-icon: url("../images/icons/blossom.svg");
+}
+
+.ht-i-flower {
+	--ht-icon: url("../images/icons/flower.svg");
+}
+
+.ht-i-basket {
+	--ht-icon: url("../images/icons/basket.svg");
+}
+
+.ht-i-ribbon {
+	--ht-icon: url("../images/icons/ribbon.svg");
+}
+
+.ht-i-check {
+	--ht-icon: url("../images/icons/check.svg");
+}
+
+.ht-i-check-circle {
+	--ht-icon: url("../images/icons/check-circle.svg");
+}
+
+.ht-i-pin {
+	--ht-icon: url("../images/icons/pin.svg");
+}
+
+.ht-i-mail {
+	--ht-icon: url("../images/icons/mail.svg");
+}
+
+.ht-i-heart {
+	--ht-icon: url("../images/icons/heart.svg");
+}
+
+.ht-i-zalo-line {
+	--ht-icon: url("../images/icons/zalo-line.svg");
+}
+
+.ht-i-chevron {
+	--ht-icon: url("../images/icons/chevron-right.svg");
+}
+
+.ht-i-bouquet {
+	--ht-icon: url("../images/icons/bouquet.svg");
+}
+
+.ht-i-card {
+	--ht-icon: url("../images/icons/card.svg");
+}
+
+/* Logo Zalo nhiều màu — mask chỉ giữ alpha nên phải đi đường background-image. */
+.ht-zalo {
+	display: block;
+	flex: 0 0 24px;
+	width: 24px;
+	height: 24px;
+	background: url("../images/icons/zalo.svg") center/contain no-repeat;
+}
+
+/* ========================================================== 2. TOP BAR == */
+/* Thiết kế: dải xám rất nhạt, icon và chữ cùng một tông xám, không nhấn hồng. */
+
+#top-bar .flex-row,
+#top-bar .flex-col,
+#top-bar .header-nav {
+	align-items: center;
+}
+
+#top-bar {
+	border-bottom: 1px solid var(--ht-line);
+}
+
+/* Flatsome ghim `.nav-small.nav > li.html{font-size:.75em}` và top bar không có
+   option cỡ chữ — trả lại kích thước của chính thanh đó. */
+#top-bar .nav-small.nav>li.html {
+	font-size: .82em;
+}
+
+#top-bar .html.custom {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	line-height: 1;
+}
+
+#top-bar .ht-tb {
+	display: inline-flex;
+	align-items: center;
+	margin-right: 34px;
+	color: var(--ht-body);
+	line-height: 1;
+	white-space: nowrap;
+}
+
+#top-bar .ht-tb:last-child {
+	margin-right: 0;
+}
+
+#top-bar .ht-tb .ht-i {
+	margin-right: 9px;
+	color: var(--ht-mute);
+	font-size: 17px;
+}
+
+/* Zalo dùng logo thật (nhiều màu) chứ không phải icon nét — nhận diện đúng thương hiệu. */
+#top-bar .ht-tb .ht-zalo {
+	flex: 0 0 17px;
+	width: 17px;
+	height: 17px;
+	margin-right: 8px;
+}
+
+#top-bar a.ht-tb:hover,
+#top-bar a.ht-tb:hover .ht-i {
+	color: var(--fs-color-primary);
+}
+
+/* =========================================================== 3. HEADER == */
+
+.header-main {
+	border-bottom: 1px solid var(--ht-line);
+}
+
+.header-main .header-nav-main {
+	flex-wrap: nowrap;
+}
+
+.header-main .header-nav-main>li>a,
+.header-bottom .header-bottom-nav>li>a {
+	position: relative;
+	padding: 0 15px;
+	font-size: 14.5px;
+	font-weight: 600;
+	letter-spacing: .02em;
+	color: var(--ht-ink);
+	white-space: nowrap;
+}
+
+/* Mục đầu tiên ăn thẳng vào mép container để menu thẳng hàng với logo. */
+.header-bottom .flex-left .header-bottom-nav>li:first-child>a {
+	padding-left: 0;
+}
+
+@media (max-width: 1199px) {
+
+	.header-main .header-nav-main>li>a,
+	.header-bottom .header-bottom-nav>li>a {
+		padding: 0 10px;
+		font-size: 13.5px;
+	}
+}
+
+/* Mục đang xem: chữ hồng + gạch chân ngắn, đúng như thiết kế.
+   Dùng ::after chứ không mượn `.nav > li > a::before` — Flatsome đã chiếm
+   pseudo đó cho hiệu ứng hover và giữ nó ở opacity 0. */
+.header-main .header-nav-main>li>a::after,
+.header-bottom .header-bottom-nav>li>a::after {
+	content: "";
+	position: absolute;
+	right: 15px;
+	bottom: 1px;
+	left: 15px;
+	height: 2.5px;
+	border-radius: 2px;
+	background: var(--fs-color-primary);
+	opacity: 0;
+	transition: opacity .18s ease;
+}
+
+.header-bottom .header-bottom-nav>li>a::after {
+	bottom: 9px;
+}
+
+.header-bottom .flex-left .header-bottom-nav>li:first-child>a::after {
+	left: 0;
+}
+
+.header-main .header-nav-main>li.current-menu-item>a,
+.header-main .header-nav-main>li.current-menu-ancestor>a,
+.header-main .header-nav-main>li.current-menu-parent>a,
+.header-bottom .header-bottom-nav>li.current-menu-item>a,
+.header-bottom .header-bottom-nav>li.current-menu-ancestor>a,
+.header-bottom .header-bottom-nav>li.current-menu-parent>a {
+	color: var(--fs-color-primary);
+}
+
+.header-main .header-nav-main>li.current-menu-item>a::after,
+.header-main .header-nav-main>li.current-menu-ancestor>a::after,
+.header-main .header-nav-main>li.current-menu-parent>a::after,
+.header-bottom .header-bottom-nav>li.current-menu-item>a::after,
+.header-bottom .header-bottom-nav>li.current-menu-ancestor>a::after,
+.header-bottom .header-bottom-nav>li.current-menu-parent>a::after {
+	opacity: 1;
+}
+
+/* Dải menu dưới: nền hồng phấn rất nhạt, ngăn với header bằng viền 1px. */
+.header-bottom {
+	border-bottom: 1px solid var(--ht-line);
+}
+
+/* ------------------------------------------- 3.1 Ô tìm kiếm trên header -- */
+/* Viên thuốc viền mảnh, nút kính lúp hồng nằm gọn bên trong. */
+
+.header-main li.header-search-form {
+	min-width: 0;
+}
+
+.header-main .header-search-form .searchform-wrapper {
+	width: 100%;
+}
+
+.header-main .header-search-form form.searchform {
+	margin: 0;
+}
+
+.header-main .header-search-form form.searchform>.flex-row {
+	align-items: center;
+	height: 46px;
+	padding: 0 5px 0 20px;
+	border: 1px solid var(--ht-line);
+	border-radius: 99px;
+	background-color: #fff;
+	transition: border-color .18s ease;
+}
+
+.header-main .header-search-form form.searchform>.flex-row:focus-within {
+	border-color: var(--ht-blush-300);
+}
+
+.header-main .header-search-form input.search-field {
+	height: 34px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background-color: transparent;
+	box-shadow: none;
+	font-size: 14px;
+	line-height: 34px;
+	color: var(--ht-ink);
+}
+
+.header-main .header-search-form input.search-field::placeholder {
+	color: var(--ht-mute);
+	opacity: 1;
+}
+
+/* `.form-flat .button.icon` của Flatsome ép `background-color:transparent!important`
+   nên nút tròn hồng buộc phải dùng !important để thắng. */
+.header-main .header-search-form button.ux-search-submit {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	min-width: 36px;
+	min-height: 36px;
+	height: 36px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background-color: var(--fs-color-primary) !important;
+	color: #fff !important;
+	box-shadow: none;
+	line-height: 1;
+	transition: background-color .18s ease;
+}
+
+.header-main .header-search-form button.ux-search-submit:hover {
+	background-color: #c93a5c !important;
+}
+
+.header-main .header-search-form button.ux-search-submit i {
+	margin: 0;
+	font-size: 15px;
+}
+
+/* Khung gợi ý luôn nằm sẵn trong DOM và JS chèn text node vào nên `:empty`
+   không dùng được — chỉ bo góc, đừng thêm viền kẻo lúc rỗng thành vạch ngang. */
+.header-main .header-search-form .live-search-results {
+	overflow: hidden;
+	border-radius: var(--ht-radius-sm);
+}
+
+@media (max-width: 1199px) {
+	.header-main li.header-search-form {
+		max-width: 320px;
+		margin-left: 22px;
+	}
+}
+
+.header-main .nav-right {
+	align-items: center;
+}
+
+.header-main .nav-right>li>a {
+	display: flex;
+	align-items: center;
+}
+
+.header-main .nav-right .header-divider {
+	display: none;
+}
+
+/* Chip hotline: viên thuốc viền hồng mảnh, nền trắng, số điện thoại là điểm nhấn.
+   Phải đủ specificity để thắng `.header-main .nav > li > a` (line-height 40px,
+   padding 0 14px) mà Flatsome in ra từ Customizer. */
+.header-main .nav-right>li>a.ht-head-call,
+.ht-head-call {
+	display: inline-flex;
+	align-items: center;
+	/* `.nav > li > a` của Flatsome bật flex-wrap:wrap — icon sẽ rớt xuống dòng
+	   riêng và chip cao gấp đôi. */
+	flex-wrap: nowrap;
+	height: auto;
+	padding: 9px 22px 9px 17px;
+	border: 1px solid var(--ht-blush-200);
+	border-radius: 99px;
+	background-color: #fff;
+	line-height: 1.15 !important;
+	transition: border-color .18s ease, background-color .18s ease;
+}
+
+.header-main .nav-right>li>a.ht-head-call:hover,
+.ht-head-call:hover {
+	border-color: var(--fs-color-primary);
+	background-color: var(--ht-blush-50);
+}
+
+.ht-head-call .ht-i-phone {
+	flex: 0 0 22px;
+	width: 22px;
+	height: 22px;
+	margin-right: 11px;
+	color: var(--fs-color-primary);
+}
+
+.ht-head-call span {
+	display: flex;
+	flex-direction: column;
+}
+
+.ht-head-call small {
+	margin-bottom: 3px;
+	font-size: 10.5px;
+	font-weight: 600;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	color: var(--ht-mute);
+}
+
+.ht-head-call strong {
+	font-size: 18px;
+	font-weight: 700;
+	letter-spacing: .01em;
+	color: var(--fs-color-primary);
+}
+
+/* Chip Zalo đứng cạnh chip hotline: cùng dáng viên thuốc, nhấn xanh Zalo để
+   hotline vẫn là hành động chính. Hai thẻ <a> nằm chung một <li> nên li phải flex. */
+.header-main li.html_top_right_text {
+	display: flex;
+	align-items: center;
+}
+
+.header-main .nav-right>li>a.ht-head-zalo,
+.ht-head-zalo {
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	height: auto;
+	margin-right: 12px;
+	padding: 9px 20px 9px 15px;
+	border: 1px solid #d6e4fb;
+	border-radius: 99px;
+	background-color: #fff;
+	line-height: 1.15 !important;
+	transition: border-color .18s ease, background-color .18s ease;
+}
+
+.header-main .nav-right>li>a.ht-head-zalo:hover,
+.ht-head-zalo:hover {
+	border-color: #0068ff;
+	background-color: #f2f7ff;
+}
+
+.ht-head-zalo .ht-zalo {
+	flex: 0 0 24px;
+	width: 24px;
+	height: 24px;
+	margin-right: 11px;
+}
+
+.ht-head-zalo span {
+	display: flex;
+	flex-direction: column;
+}
+
+.ht-head-zalo small {
+	margin-bottom: 3px;
+	font-size: 10.5px;
+	font-weight: 600;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	color: var(--ht-mute);
+}
+
+.ht-head-zalo strong {
+	font-size: 15px;
+	font-weight: 700;
+	color: #0068ff;
+}
+
+@media (max-width: 1299px) {
+
+	.header-main .nav-right>li>a.ht-head-call,
+	.ht-head-call {
+		padding: 7px 14px 7px 12px;
+	}
+
+	.header-main .nav-right>li>a.ht-head-zalo,
+	.ht-head-zalo {
+		margin-right: 9px;
+		padding: 7px 14px 7px 12px;
+	}
+
+	.ht-head-call small,
+	.ht-head-zalo small {
+		display: none;
+	}
+
+	.ht-head-call strong {
+		font-size: 15px;
+	}
+
+	.ht-head-zalo strong {
+		font-size: 14px;
+	}
+
+	.ht-head-zalo .ht-zalo {
+		flex-basis: 20px;
+		width: 20px;
+		height: 20px;
+		margin-right: 8px;
+	}
+}
+
+/* Badge giỏ hàng: Flatsome ẩn `[data-icon-label]::after` khi đếm bằng 0. */
+.header-main .cart-item .header-cart-link {
+	position: relative;
+}
+
+.header-main .cart-item [data-icon-label]::after {
+	content: attr(data-icon-label) !important;
+	display: flex !important;
+	position: absolute;
+	top: -7px;
+	right: -10px;
+	align-items: center;
+	justify-content: center;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 4px;
+	border: 0 !important;
+	border-radius: 9px;
+	background-color: var(--fs-color-primary) !important;
+	color: #fff !important;
+	font-size: 10px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.nav-dropdown {
+	padding: 10px 6px;
+	border: 1px solid var(--ht-line);
+	border-radius: var(--ht-radius-sm);
+	box-shadow: none;
+}
+
+.nav-dropdown>li>a {
+	padding: 9px 16px;
+	border-radius: 8px;
+	font-size: 14.5px;
+	text-transform: none;
+	letter-spacing: 0;
+}
+
+.nav-dropdown>li>a:hover {
+	background: var(--ht-blush-50);
+	color: var(--fs-color-primary);
+}
+
+/* ==================================================== 4. SHARED PIECES == */
+
+/* `[title]` render trong `.container`; vô hiệu hoá khi nó nằm trong một cột. */
+.section-title-container.ht-sec-title,
+.section-title-container.ht-hero-title,
+.section-title-container.ht-phead-title,
+.section-title-container.ht-block-title {
+	max-width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.ht-sec-title .section-title,
+.ht-hero-title .section-title,
+.ht-phead-title .section-title,
+.ht-block-title .section-title {
+	display: block;
+	margin: 0;
+	border: 0;
+}
+
+.ht-sec-title .section-title b,
+.ht-hero-title .section-title b,
+.ht-phead-title .section-title b,
+.ht-block-title .section-title b {
+	display: none;
+}
+
+.ht-sec-title .section-title {
+	text-align: center;
+}
+
+.ht-sec-title .section-title-main {
+	display: inline-block;
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: var(--ht-display);
+	font-size: clamp(26px, 2.9vw, 40px);
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: -.005em;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+/* Gạch trang trí ─── ✿ ─── : một file mask duy nhất, phần vạch để opacity thấp
+   ngay trong SVG nên vẫn ăn theo màu nhấn của Customizer. */
+.ht-sec-title .section-title-main::after {
+	content: "";
+	display: block;
+	width: 96px;
+	height: 14px;
+	margin: 17px auto 0;
+	background-color: var(--fs-color-primary);
+	-webkit-mask: url("../images/icons/title-divider.svg") center/contain no-repeat;
+	mask: url("../images/icons/title-divider.svg") center/contain no-repeat;
+}
+
+.ht-eyebrow {
+	margin: 0 0 10px;
+	font-size: 12.5px;
+	font-weight: 700;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+	color: var(--fs-color-primary);
+}
+
+.ht-sec-lead {
+	max-width: 620px;
+	margin: 14px auto 0;
+	font-size: 15px;
+	line-height: 1.9;
+	color: var(--ht-body);
+}
+
+/* Nút viền: nền trắng, viền xám mảnh, chữ hoa đậm — như nút "Xem mẫu hoa". */
+.button.ht-btn-ghost,
+.wrap .button.ht-btn-ghost {
+	border: 1px solid var(--ht-line);
+	background: #fff;
+	color: var(--ht-green);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+}
+
+.button.ht-btn-ghost:hover {
+	border-color: var(--fs-color-primary);
+	background: #fff;
+	color: var(--fs-color-primary);
+}
+
+/* ============================================================= 5. HERO == */
+
+.ht-hero .ht-hero-copy {
+	position: relative;
+	z-index: 2;
+}
+
+.ht-hero-script {
+	margin-bottom: 14px;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: .2em;
+	text-transform: uppercase;
+	color: var(--fs-color-primary);
+}
+
+.ht-hero-title .section-title {
+	text-align: left;
+}
+
+/* Giới hạn bề ngang để tiêu đề ngắt dòng đúng chỗ như thiết kế
+   ("… yêu thương / bằng đóa hoa tươi"), không phụ thuộc số cột.
+   `.section-title-container` của Flatsome có `margin:0 auto` — phải khoá lề trái
+   lại, nếu không khối tiêu đề bị đẩy vào giữa và lệch so với chữ bên dưới. */
+@media (min-width: 850px) {
+	.section-title-container.ht-hero-title {
+		max-width: 500px;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+.ht-hero-title .section-title-main {
+	display: block;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: clamp(31px, 3.9vw, 52px);
+	font-weight: 800;
+	line-height: 1.14;
+	letter-spacing: -.025em;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+.ht-hero-sub {
+	max-width: 440px;
+	margin-bottom: 34px;
+	font-size: clamp(14px, 1.15vw, 16px);
+	line-height: 2;
+	color: var(--ht-body);
+}
+
+/* Nút có icon: giữ icon và chữ trên cùng một dòng kể cả khi nút giãn hết cột. */
+.ht-hero-cta .button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 0;
+	margin-bottom: 0;
+	padding: 17px 32px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: .045em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.ht-hero-cta .button i {
+	margin: 0 9px 0 0;
+	font-size: 16px;
+}
+
+.ht-hero-cta .button.ht-btn-ghost i {
+	margin: 0 0 0 10px;
+	font-size: 14px;
+}
+
+/* Ba tem tin cậy dưới CTA: vòng tròn tick nét mảnh + chữ xám. */
+.ht-hero-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 28px;
+	margin: 34px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ht-hero-chips li {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+	font-size: 13.5px;
+	font-weight: 500;
+	white-space: nowrap;
+	color: var(--ht-body);
+}
+
+.ht-hero-chips li .ht-i {
+	flex: 0 0 19px;
+	width: 19px;
+	height: 19px;
+	margin-right: 10px;
+	color: var(--ht-green);
+}
+
+/* ========================================================= 6. USP STRIP == */
+/* Dải trắng, 4 ô ngăn bằng vạch dọc mảnh, icon nằm trong ô bo góc nền hồng nhạt. */
+
+.ht-usp {
+	border-bottom: 1px solid var(--ht-line);
+}
+
+.ht-usp .icon-box {
+	align-items: center;
+	margin-bottom: 0;
+}
+
+/* `img_width` ghi width inline lên .icon-box-img; ép lại thành ô vuông bo góc. */
+.ht-usp .icon-box-img {
+	width: 52px !important;
+	height: 52px;
+	flex: 0 0 52px;
+	margin: 0;
+}
+
+.ht-usp .icon-box-img .icon {
+	display: flex;
+	box-sizing: border-box;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	padding: 12px;
+	border-radius: var(--ht-radius-sm);
+	background: var(--ht-blush-100);
+}
+
+/* Flatsome ép `fill:currentColor` lên mọi SVG icon-box; giữ icon nét mảnh. */
+.ht-usp .icon-inner svg[fill="none"],
+.ht-usp .icon-inner svg[fill="none"] path {
+	fill: none;
+}
+
+.ht-usp .icon-inner svg[stroke] {
+	stroke: currentColor;
+}
+
+/* `.icon-box-left .icon-box-text{padding-left:1rem}` là (0,3,0) — phải đủ mạnh. */
+.ht-usp .icon-box.icon-box-left .icon-box-text {
+	flex: 0 1 auto;
+	padding: 0 0 0 16px;
+}
+
+.ht-usp .icon-box-text h5 {
+	margin: 0 0 4px;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+.ht-usp .icon-box-text p {
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.5;
+	color: var(--ht-body);
+}
+
+/* ======================================================= 7. CATEGORIES == */
+
+.ht-cat-grid .col-inner {
+	height: 100%;
+}
+
+.ht-cat-grid .box-category {
+	overflow: hidden;
+	height: 100%;
+	border: 1px solid var(--ht-line);
+	border-radius: var(--ht-radius);
+	background: #fff;
+	transition: border-color .22s ease, transform .22s ease;
+}
+
+.ht-cat-grid .col:hover .box-category {
+	transform: translateY(-4px);
+	border-color: var(--ht-blush-300);
+}
+
+.ht-cat-grid .box-image {
+	border-radius: 0;
+}
+
+.ht-cat-grid .box-text {
+	padding: 16px 10px 18px;
+}
+
+.ht-cat-grid .box-text .header-title,
+.ht-cat-grid .box-text p.name {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.35;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+.ht-cat-grid .box-text::after {
+	content: "Xem mẫu hoa →";
+	display: block;
+	margin-top: 7px;
+	font-size: 12.5px;
+	font-weight: 600;
+	color: var(--fs-color-primary);
+}
+
+.ht-cat-grid .box-text .is-divider,
+.ht-cat-grid .box-text .count {
+	display: none;
+}
+
+/* ========================================================= 8. PRODUCTS == */
+
+/* Chỉ tạo vỏ thẻ. KHÔNG biến `.box` thành flex container: `.box-image` tự tính
+   chiều cao bằng padding % và sẽ bị bóp hoặc kéo giãn trong flex parent. */
+.product-small .col-inner {
+	height: 100%;
+	overflow: hidden;
+	border: 1px solid var(--ht-line);
+	border-radius: var(--ht-radius);
+	background: #fff;
+	transition: border-color .22s ease, transform .22s ease;
+}
+
+.product-small:hover .col-inner {
+	transform: translateY(-4px);
+	border-color: var(--ht-blush-300);
+}
+
+.product-small .box-image {
+	border-radius: 0;
+}
+
+.product-small .box-text {
+	padding: 14px 14px 16px;
+	text-align: center;
+}
+
+.product-small .box-text .name a,
+.product-small .product-title a {
+	display: block;
+	font-size: 14.5px;
+	font-weight: 600;
+	line-height: 1.45;
+	color: var(--ht-green);
+}
+
+.product-small .box-text .name a:hover {
+	color: var(--fs-color-primary);
+}
+
+.product-small .price-wrapper .price,
+.product-small .price {
+	display: block;
+	margin: 6px 0 0;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--fs-color-primary);
+}
+
+.product-small .price del {
+	font-size: 12.5px;
+	font-weight: 500;
+	color: #b9b2c0;
+}
+
+.product-small .box-text .is-divider,
+.product-small .box-text .category {
+	display: none;
+}
+
+/* Cặp nút Gọi / Zalo nằm trong slot `.image-tools` sẵn có của Flatsome, nên hiệu
+   ứng trượt lên khi hover là của theme — ở đây chỉ căn khung và tạo kiểu nút.
+   `.grid-tools` là flex container nên hàng nút phải tự khai báo chiều rộng. */
+.product-small .image-tools.ht-actions-slot {
+	display: block;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+/* Khoảng thụt đặt trên hàng nút chứ không trên slot: `.grid-tools` của
+   flatsome-shop.css ép padding về 0 nên đặt ở slot sẽ bị bỏ qua. */
+.ht-card-actions {
+	display: flex;
+	gap: 6px;
+	width: 100%;
+	padding: 0 9px 9px;
+}
+
+/* flatsome-shop.css có `.grid-tools a` (0,1,1) đặt display:block + padding riêng;
+   selector dưới đây phải là (0,2,1) mới thắng, nếu không nhãn tràn khỏi nút. */
+.ht-card-actions a.ht-card-btn {
+	display: flex;
+	flex: 1 1 0;
+	align-items: center;
+	justify-content: center;
+	min-width: 0;
+	height: 34px;
+	padding: 0 6px;
+	border: 1px solid transparent;
+	border-radius: 99px;
+	font-size: 12.5px;
+	font-weight: 700;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: 0;
+	white-space: nowrap;
+	box-shadow: none;
+	transition: filter .18s ease;
+}
+
+.ht-card-actions a.ht-card-btn:hover {
+	filter: brightness(1.06);
+}
+
+/* Thẻ hẹp dần từ 1100px trở xuống (lưới 4 rồi 3 cột) — rút gọn nút sớm. */
+@media (max-width: 1099px) {
+	.ht-card-actions {
+		gap: 5px;
+		padding: 0 7px 7px;
+	}
+
+	.ht-card-actions a.ht-card-btn {
+		height: 31px;
+		padding: 0 5px;
+		font-size: 11.5px;
+	}
+
+	.ht-card-actions a.ht-card-btn .ht-i,
+	.ht-card-actions a.ht-card-btn .ht-zalo {
+		flex-basis: 14px;
+		width: 14px;
+		height: 14px;
+		margin-right: 4px;
+	}
+}
+
+/* Nhãn co lại và cắt bằng ba chấm khi thẻ hẹp — không bao giờ tràn khỏi viên nút. */
+.ht-card-actions a.ht-card-btn>span {
+	overflow: hidden;
+	min-width: 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 1.2;
+}
+
+.ht-card-actions a.ht-card-btn .ht-i {
+	flex: 0 0 15px;
+	width: 15px;
+	height: 15px;
+	margin-right: 5px;
+}
+
+.ht-card-actions a.ht-card-btn .ht-zalo {
+	flex: 0 0 16px;
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+}
+
+.ht-card-actions a.ht-card-btn--call {
+	background-color: var(--fs-color-primary);
+	color: #fff;
+}
+
+.ht-card-actions a.ht-card-btn--zalo {
+	border-color: var(--ht-line);
+	background-color: #fff;
+	color: #0068ff;
+}
+
+/* Tem "Bán chạy" / giảm giá */
+.badge-container {
+	margin: 11px 0 0 11px;
+}
+
+.badge {
+	width: auto;
+	height: auto;
+}
+
+.badge .badge-inner {
+	width: auto;
+	min-width: 0;
+	height: auto;
+	padding: 5px 11px;
+	border-radius: 99px;
+	background-color: var(--fs-color-primary);
+	color: #fff;
+	font-size: 9.5px;
+	font-weight: 700;
+	letter-spacing: .06em;
+	line-height: 1.2;
+}
+
+/* Mũi tên slider — luôn hiện, viền mảnh thay cho đổ bóng. */
+.ht-prod-slider .flickity-prev-next-button,
+.ht-prod-slider .flickity-prev-next-button.previous,
+.ht-prod-slider .flickity-prev-next-button.next {
+	width: 38px;
+	height: 38px;
+	border: 1px solid var(--ht-line);
+	background: #fff !important;
+	opacity: 1 !important;
+	box-shadow: none;
+}
+
+.ht-prod-slider .flickity-prev-next-button svg,
+.ht-prod-slider .flickity-prev-next-button .arrow {
+	fill: var(--fs-color-primary);
+	color: var(--fs-color-primary);
+}
+
+/* ==================================================== 9. CONTACT STRIP == */
+
+.ht-cta-title {
+	margin: 0 0 8px;
+	font-size: clamp(22px, 2.4vw, 32px);
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -.015em;
+	color: #fff;
+}
+
+.ht-cta-sub {
+	margin: 0;
+	font-size: 15px;
+	line-height: 1.85;
+	color: rgba(255, 255, 255, .78);
+}
+
+.ht-cta-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 0;
+}
+
+.ht-cta-btn {
+	display: flex;
+	align-items: center;
+	flex: 1 1 190px;
+	min-width: 0;
+	padding: 14px 20px;
+	border-radius: var(--ht-radius);
+	background-color: #fff;
+	transition: transform .18s ease;
+}
+
+.ht-cta-btn:hover {
+	transform: translateY(-2px);
+}
+
+.ht-cta-btn>span {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ht-cta-btn small {
+	margin-bottom: 2px;
+	font-size: 10.5px;
+	font-weight: 600;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	color: var(--ht-mute);
+}
+
+.ht-cta-btn strong {
+	overflow: hidden;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.25;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.ht-cta-btn--call .ht-i-phone {
+	flex: 0 0 26px;
+	width: 26px;
+	height: 26px;
+	margin-right: 13px;
+	color: var(--fs-color-primary);
+}
+
+.ht-cta-btn--call strong {
+	color: var(--fs-color-primary);
+}
+
+.ht-cta-btn--zalo .ht-zalo {
+	flex: 0 0 28px;
+	width: 28px;
+	height: 28px;
+	margin-right: 13px;
+}
+
+.ht-cta-btn--zalo strong {
+	font-size: 15px;
+	color: #0068ff;
+}
+
+/* =============================== 10. SINGLE PRODUCT — LIÊN HỆ + CAM KẾT == */
+
+.ht-pdp-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 4px 0 18px;
+}
+
+.ht-pdp-btn {
+	display: flex;
+	align-items: center;
+	flex: 1 1 180px;
+	min-width: 0;
+	padding: 13px 16px;
+	border: 1px solid var(--ht-pdp-line);
+	border-radius: var(--ht-radius-sm);
+	background-color: var(--ht-pdp-bg);
+	transition: border-color .18s ease, background-color .18s ease;
+}
+
+.ht-pdp-btn:hover {
+	border-color: var(--ht-pdp-ink);
+	background-color: var(--ht-pdp-bg-hover);
+}
+
+.ht-pdp-btn--call {
+	--ht-pdp-bg: #fff;
+	--ht-pdp-bg-hover: var(--ht-blush-50);
+	--ht-pdp-line: var(--ht-blush-200);
+	--ht-pdp-ink: var(--fs-color-primary);
+	--ht-pdp-sub: #b58fa0;
+}
+
+.ht-pdp-btn--zalo {
+	--ht-pdp-bg: #fff;
+	--ht-pdp-bg-hover: #f2f7ff;
+	--ht-pdp-line: #d6e4fb;
+	--ht-pdp-ink: #0068ff;
+	--ht-pdp-sub: #8a9bb3;
+}
+
+.ht-pdp-btn>span {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.ht-pdp-btn small {
+	margin-bottom: 2px;
+	font-size: 10.5px;
+	font-weight: 600;
+	letter-spacing: .07em;
+	text-transform: uppercase;
+	color: var(--ht-pdp-sub);
+}
+
+.ht-pdp-btn strong {
+	overflow: hidden;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var(--ht-pdp-ink);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.ht-pdp-btn--zalo strong {
+	font-size: 13.5px;
+}
+
+.ht-pdp-btn .ht-i-phone {
+	flex: 0 0 23px;
+	width: 23px;
+	height: 23px;
+	margin-right: 11px;
+	color: var(--ht-pdp-ink);
+}
+
+.ht-pdp-btn .ht-zalo {
+	flex: 0 0 26px;
+	width: 26px;
+	height: 26px;
+	margin-right: 11px;
+}
+
+/* Hộp cam kết — viền mảnh liền nét, nền trắng. */
+.ht-trust {
+	margin: 0 0 20px;
+	padding: 18px 20px;
+	border: 1px solid var(--ht-line);
+	border-radius: var(--ht-radius);
+	background: #fff;
+}
+
+.ht-trust__title {
+	margin: 0 0 13px;
+	font-size: 11.5px;
+	font-weight: 700;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	color: var(--ht-mute);
+}
+
+ul.ht-trust__list {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 13px 22px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.ht-trust__list li {
+	display: flex;
+	align-items: flex-start;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+	font-size: 13px;
+	line-height: 1.5;
+	color: var(--ht-body);
+}
+
+ul.ht-trust__list li .ht-i {
+	flex: 0 0 17px;
+	width: 17px;
+	height: 17px;
+	margin: 1px 10px 0 0;
+	color: var(--fs-color-primary);
+}
+
+ul.ht-trust__list li strong {
+	display: block;
+	font-size: 13.5px;
+	font-weight: 700;
+	color: var(--ht-green);
+}
+
+.ht-trust__note {
+	margin: 15px 0 0;
+	padding-top: 13px;
+	border-top: 1px solid var(--ht-line);
+	font-size: 13px;
+	line-height: 1.55;
+	color: var(--ht-body);
+}
+
+.ht-trust__note a {
+	font-weight: 700;
+	color: var(--fs-color-primary);
+}
+
+/* Trang sản phẩm */
+.single-product .product-info .price-wrapper {
+	margin: 14px 0 18px;
+}
+
+.single-product .product-info .price .amount {
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--fs-color-primary);
+}
+
+.single-product .product_meta>span {
+	border: 0;
+}
+
+.single-product .product-title {
+	font-size: clamp(22px, 2.3vw, 30px);
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -.015em;
+	color: var(--ht-green);
+}
+
+.single-product .woocommerce-product-gallery__image img {
+	border-radius: var(--ht-radius);
+}
+
+/* Ảnh 3:4 để nguyên bề ngang của cột; ghim cột thông tin để nó không bị hụt so
+   với ảnh cao. */
+@media (min-width: 850px) {
+	.single-product .product-info {
+		position: sticky;
+		top: 100px;
+		align-self: flex-start;
+	}
+}
+
+/* Mã mẫu + danh mục ngay dưới tên sản phẩm. */
+.ht-pdp-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 10px 0 0;
+}
+
+.ht-pdp-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 5px 13px;
+	border: 1px solid var(--ht-line);
+	border-radius: 99px;
+	font-size: 12.5px;
+	line-height: 1.4;
+	color: var(--ht-body);
+}
+
+.ht-pdp-chip strong {
+	font-weight: 700;
+	color: var(--ht-green);
+}
+
+a.ht-pdp-chip--link {
+	border-color: var(--ht-blush-200);
+	background-color: var(--ht-blush-50);
+	color: var(--fs-color-primary);
+	font-weight: 600;
+}
+
+a.ht-pdp-chip--link:hover {
+	border-color: var(--fs-color-primary);
+	color: var(--fs-color-primary);
+}
+
+.ht-pdp-note {
+	display: flex;
+	align-items: flex-start;
+	margin: -6px 0 20px;
+	font-size: 13px;
+	line-height: 1.6;
+	color: var(--ht-body);
+}
+
+.ht-pdp-note .ht-i {
+	flex: 0 0 17px;
+	width: 17px;
+	height: 17px;
+	margin: 1px 9px 0 0;
+	color: var(--fs-color-primary);
+}
+
+/* --------------------------- Thiệp / băng chữ kèm hoa -------------------- */
+/* Khối cho khách chọn có kèm chữ hay không và tự nhập nội dung, đặt ngay trên
+   nút đặt hàng. Kiểu chữ đổi theo danh mục — xem inc/product-greeting.php. */
+
+.ht-greeting {
+	flex: 0 0 100%;
+	width: 100%;
+	margin: 0 0 18px;
+	padding: 13px 16px 14px;
+	border: 1px dashed var(--ht-blush-300);
+	border-radius: var(--ht-radius-sm);
+	background-color: var(--ht-blush-50);
+}
+
+.ht-greeting__toggle {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	cursor: pointer;
+}
+
+.ht-greeting__toggle input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+
+.ht-greeting__mark {
+	position: relative;
+	flex: 0 0 20px;
+	width: 20px;
+	height: 20px;
+	margin-right: 11px;
+	border: 1.5px solid var(--ht-blush-300);
+	border-radius: 6px;
+	background-color: #fff;
+	transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.ht-greeting__mark::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: #fff;
+	-webkit-mask: url("../images/icons/check.svg") center/12px no-repeat;
+	mask: url("../images/icons/check.svg") center/12px no-repeat;
+	opacity: 0;
+	transition: opacity .16s ease;
+}
+
+.ht-greeting__toggle input:checked+.ht-greeting__mark {
+	border-color: var(--fs-color-primary);
+	background-color: var(--fs-color-primary);
+}
+
+.ht-greeting__toggle input:checked+.ht-greeting__mark::after {
+	opacity: 1;
+}
+
+.ht-greeting__toggle input:focus-visible+.ht-greeting__mark {
+	box-shadow: 0 0 0 3px var(--ht-blush-200);
+}
+
+.ht-greeting__label {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	font-size: 14.5px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--ht-ink);
+}
+
+.ht-greeting__label .ht-i {
+	width: 18px;
+	height: 18px;
+	color: var(--fs-color-primary);
+}
+
+.ht-greeting__label em {
+	padding: 2px 9px;
+	border-radius: 99px;
+	background-color: var(--ht-blush-200);
+	font-style: normal;
+	font-size: 11.5px;
+	font-weight: 700;
+	color: var(--fs-color-primary);
+}
+
+/* Hai rule tách riêng: gộp chung thì trình duyệt không hiểu :has() sẽ bỏ cả rule. */
+.ht-greeting__body {
+	display: none;
+	margin-top: 13px;
+}
+
+.ht-greeting.is-on>.ht-greeting__body {
+	display: block;
+}
+
+.ht-greeting:has(.ht-greeting__toggle input:checked)>.ht-greeting__body {
+	display: block;
+}
+
+.ht-greeting__hint {
+	margin: 0 0 11px;
+	padding-top: 12px;
+	border-top: 1px dashed var(--ht-blush-200);
+	font-size: 12.5px;
+	line-height: 1.65;
+	color: var(--ht-body);
+}
+
+.ht-greeting__suggest {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 7px;
+	margin-bottom: 13px;
+}
+
+.ht-greeting__suggest-label {
+	font-size: 12px;
+	color: var(--ht-mute);
+}
+
+button.ht-greeting__chip {
+	min-height: 0;
+	margin: 0;
+	padding: 5px 12px;
+	border: 1px solid var(--ht-blush-200);
+	border-radius: 99px;
+	background-color: #fff;
+	box-shadow: none;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ht-body);
+	transition: border-color .16s ease, color .16s ease;
+}
+
+button.ht-greeting__chip:hover {
+	border-color: var(--fs-color-primary);
+	background-color: #fff;
+	color: var(--fs-color-primary);
+}
+
+.ht-greeting__fields {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 14px;
+}
+
+.ht-greeting__field {
+	flex: 1 1 100%;
+	min-width: 0;
+	margin: 0 0 12px;
+}
+
+.ht-greeting__field:last-child {
+	margin-bottom: 0;
+}
+
+/* Các trường ngắn (Kính tặng / Từ) xếp đôi khi còn đủ chỗ. */
+@media (min-width: 550px) {
+	.ht-greeting__field--half {
+		flex: 1 1 calc(50% - 7px);
+	}
+}
+
+.ht-greeting__field label {
+	display: block;
+	margin-bottom: 5px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: .02em;
+	color: var(--ht-ink);
+}
+
+.ht-greeting__req {
+	color: var(--fs-color-primary);
+}
+
+.ht-greeting__field input[type="text"],
+.ht-greeting__field textarea {
+	min-height: 0;
+	height: auto;
+	margin: 0;
+	padding: 9px 12px;
+	border: 1px solid var(--ht-blush-200);
+	border-radius: 9px;
+	background-color: #fff;
+	box-shadow: none;
+	font-size: 13.5px;
+	line-height: 1.6;
+	color: var(--ht-ink);
+}
+
+.ht-greeting__field textarea {
+	resize: vertical;
+}
+
+.ht-greeting__field input[type="text"]:focus,
+.ht-greeting__field textarea:focus {
+	border-color: var(--ht-blush-300);
+	box-shadow: 0 0 0 3px var(--ht-blush-100);
+}
+
+.ht-greeting__count {
+	display: block;
+	margin-top: 4px;
+	font-size: 11px;
+	text-align: right;
+	color: var(--ht-mute);
+}
+
+.ht-greeting__preview {
+	margin-top: 14px;
+	padding: 13px 15px;
+	border: 1px solid var(--ht-blush-200);
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+.ht-greeting__pv-title {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 10.5px;
+	font-weight: 700;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	color: var(--ht-mute);
+}
+
+.ht-greeting__pv-row {
+	display: block;
+	font-size: 13.5px;
+	line-height: 1.75;
+	color: var(--ht-ink);
+	word-break: break-word;
+}
+
+.ht-greeting__pv-row em {
+	margin-right: 6px;
+	font-style: normal;
+	font-size: 11px;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	color: var(--ht-mute);
+}
+
+.ht-greeting__pv.is-empty {
+	font-style: italic;
+	color: var(--ht-mute);
+}
+
+.ht-greeting__preview--card .ht-greeting__pv-row[data-row="message"] {
+	margin-bottom: 6px;
+	font-family: var(--ht-display);
+	font-size: 15px;
+}
+
+/* Băng rôn và băng chữ viếng in hoa, căn giữa như lúc lên băng vải. */
+.ht-greeting__preview--ribbon {
+	text-align: center;
+}
+
+.ht-greeting__preview--ribbon .ht-greeting__pv-row[data-row="line1"] {
+	font-weight: 700;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+	color: var(--ht-green);
+}
+
+@media (max-width: 549px) {
+	.ht-greeting {
+		padding: 12px 13px;
+	}
+
+	.ht-greeting__label {
+		font-size: 13.5px;
+	}
+}
+
+/* Sửa lại nội dung ngay trong bảng giỏ hàng. */
+.ht-greeting-edit {
+	margin: 8px 0 0;
+	padding: 9px 12px 11px;
+	border: 1px dashed var(--ht-blush-300);
+	border-radius: 10px;
+	background-color: var(--ht-blush-50);
+}
+
+.ht-greeting-edit>summary {
+	cursor: pointer;
+	font-size: 12.5px;
+	font-weight: 600;
+	color: var(--fs-color-primary);
+}
+
+.ht-greeting-edit__field {
+	margin: 9px 0 0;
+}
+
+.ht-greeting-edit__field label {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 11.5px;
+	font-weight: 600;
+	color: var(--ht-body);
+}
+
+.ht-greeting-edit__field input[type="text"],
+.ht-greeting-edit__field textarea {
+	min-height: 0;
+	height: auto;
+	margin: 0;
+	padding: 7px 10px;
+	border: 1px solid var(--ht-blush-200);
+	border-radius: 8px;
+	background-color: #fff;
+	box-shadow: none;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+/* Flatsome in inline `button[name="update_cart"]{display:none}` khi bật tự động
+   làm mới giỏ, nên selector này phải cao hơn (0,2,1) mới thắng. */
+.ht-greeting-edit button.ht-greeting-edit__save {
+	display: inline-block;
+	min-height: 0;
+	margin: 11px 0 0;
+	padding: 7px 16px;
+	border-radius: 99px;
+	background-color: var(--fs-color-primary);
+	box-shadow: none;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.5;
+	letter-spacing: 0;
+	text-transform: none;
+	color: #fff;
+}
+
+/* --------------------------- Khối nội dung dưới trang sản phẩm ----------- */
+/* Nội dung dựng bằng UX Block (Flatsome → UX Blocks), ở đây chỉ tạo dáng. */
+
+.ht-pdp-block {
+	margin: 10px 0 6px;
+	padding-top: 30px;
+}
+
+.ht-pdp-intro {
+	max-width: 640px;
+	margin: 0 0 22px;
+	font-size: 15px;
+	line-height: 1.95;
+	color: var(--ht-body);
+}
+
+ul.ht-pdp-specs {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: 1px solid var(--ht-line);
+}
+
+ul.ht-pdp-specs>li {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 18px;
+	margin: 0;
+	padding: 12px 2px;
+	border-bottom: 1px solid var(--ht-line);
+	list-style: none;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.ht-pdp-specs__key {
+	flex: 0 0 176px;
+	color: var(--ht-mute);
+}
+
+.ht-pdp-specs__val {
+	flex: 1 1 200px;
+	min-width: 0;
+	font-weight: 600;
+	color: var(--ht-ink);
+}
+
+/* Hỏi đáp — dùng [accordion] của Flatsome nên có sẵn schema FAQPage. */
+.ht-faq.accordion {
+	overflow: hidden;
+	border: 1px solid var(--ht-line);
+	border-radius: var(--ht-radius);
+	background-color: #fff;
+}
+
+.ht-faq .accordion-item+.accordion-item>a.accordion-title {
+	border-top: 1px solid var(--ht-line);
+}
+
+.ht-faq a.accordion-title {
+	padding: 15px 48px 15px 18px;
+	border-top: 0;
+	font-size: 14.5px;
+	font-weight: 700;
+	line-height: 1.5;
+	color: var(--ht-green);
+}
+
+.ht-faq a.accordion-title:hover {
+	background-color: var(--ht-blush-50);
+	color: var(--fs-color-primary);
+}
+
+.ht-faq a.accordion-title.active {
+	background-color: transparent;
+	color: var(--fs-color-primary);
+}
+
+/* Flatsome ghim nút mở/đóng sang trái; thiết kế để bên phải. */
+.ht-faq a.accordion-title .toggle {
+	right: 14px;
+	left: auto;
+	top: 50%;
+	width: 22px;
+	height: 22px;
+	margin: 0;
+	transform: translateY(-50%);
+	color: var(--fs-color-primary);
+	opacity: 1;
+}
+
+.ht-faq a.accordion-title.active .toggle {
+	transform: translateY(-50%) rotate(180deg);
+}
+
+.ht-faq .accordion-inner {
+	padding: 0 18px 16px;
+	font-size: 13.5px;
+	line-height: 1.85;
+	color: var(--ht-body);
+}
+
+.ht-faq .accordion-inner p {
+	margin: 0;
+	font-size: inherit;
+	line-height: inherit;
+	color: inherit;
+}
+
+/* Ba thẻ chính sách — mỗi thẻ là một [col] chứa [featured_box]. */
+.ht-pdp-policy-row {
+	margin-top: 26px;
+}
+
+.ht-policy>.col-inner {
+	height: 100%;
+	border: 1px solid var(--ht-line);
+	transition: border-color .18s ease;
+}
+
+.ht-policy:hover>.col-inner {
+	border-color: var(--ht-blush-300);
+}
+
+.ht-policy .icon-box {
+	flex-wrap: nowrap;
+	align-items: center;
+	margin-bottom: 0;
+}
+
+.ht-policy .icon-box-img {
+	width: 44px !important;
+	height: 44px;
+	flex: 0 0 44px;
+	margin: 0;
+}
+
+.ht-policy .icon-box-img .icon {
+	display: flex;
+	box-sizing: border-box;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 12px;
+	border-radius: var(--ht-radius-sm);
+	background-color: var(--ht-blush-100);
+}
+
+.ht-policy .icon-inner svg[fill="none"],
+.ht-policy .icon-inner svg[fill="none"] path {
+	fill: none;
+}
+
+.ht-policy .icon-box.icon-box-left .icon-box-text {
+	flex: 1 1 0;
+	min-width: 0;
+	padding: 0 0 0 14px;
+	font-size: 13px;
+	line-height: 1.55;
+	color: var(--ht-body);
+}
+
+.ht-policy .icon-box-text h5 {
+	margin: 0 0 2px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.35;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+/* Tiêu đề "Mẫu hoa tương tự" — cùng hệ với tiêu đề mục. */
+.product-section-title-related {
+	margin-top: 0;
+	padding-top: 0;
+	border-top: 0;
+	font-family: var(--ht-display);
+	font-size: 25px;
+	font-weight: 700;
+	letter-spacing: -.005em;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+@media (max-width: 549px) {
+	.ht-pdp-specs__key {
+		flex-basis: 100%;
+		font-size: 12.5px;
+	}
+}
+
+/* =========================================== 11. STICKY CALL BAR (MOBILE) == */
+
+.ht-sticky-bar {
+	display: none;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 999;
+	padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+	border-top: 1px solid var(--ht-line);
+	background: #fff;
+}
+
+.ht-sticky-bar__row {
+	display: flex;
+	gap: 8px;
+	/* Trên tablet thanh full-width làm hai nút dài ngoằng — bó lại và căn giữa. */
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+.ht-sticky-bar a {
+	display: flex;
+	flex: 1 1 0;
+	align-items: center;
+	justify-content: center;
+	min-width: 0;
+	height: 44px;
+	border: 1px solid transparent;
+	border-radius: 99px;
+	font-size: 13.5px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.ht-sticky-bar a .ht-i {
+	flex: 0 0 17px;
+	width: 17px;
+	height: 17px;
+	margin-right: 7px;
+}
+
+.ht-sticky-bar a .ht-zalo {
+	flex: 0 0 19px;
+	width: 19px;
+	height: 19px;
+	margin-right: 7px;
+}
+
+.ht-sticky-bar a>span {
+	overflow: hidden;
+	min-width: 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ht-sticky-bar__call {
+	background: var(--fs-color-primary);
+	color: #fff;
+}
+
+.ht-sticky-bar__call:hover {
+	color: #fff;
+}
+
+.ht-sticky-bar__zalo {
+	border-color: #cfe0fb;
+	background: #f1f6ff;
+	color: #0068ff;
+}
+
+.ht-sticky-bar__zalo:hover {
+	color: #0068ff;
+}
+
+@media (max-width: 849px) {
+	.ht-sticky-bar {
+		display: block;
+	}
+
+	body {
+		padding-bottom: 64px;
+	}
+}
+
+/* =========================================================== 12. FOOTER == */
+
+/* Nền hồng phấn, hoa trang trí chìm ở góc phải dưới, bốn cột: thương hiệu —
+   danh mục — hỗ trợ — liên hệ. Màu nền lấy từ Customizer (footer_1_bg_color)
+   nên ở đây chỉ đặt background-image, không đụng vào background-color. */
+
+.footer-widgets.footer-1 {
+	position: relative;
+	overflow: hidden;
+	padding: 60px 0 44px;
+	border-top: 1px solid var(--ht-foot-line);
+	background-image: url("../images/footer-bloom.svg");
+	background-repeat: no-repeat;
+	background-position: right -14px bottom -18px;
+	background-size: 300px auto;
+}
+
+.footer-widgets.footer-1>.row {
+	position: relative;
+	z-index: 1;
+}
+
+.footer-widgets.footer-1 .widget-title {
+	display: block;
+	margin: 0;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: var(--ht-foot-title);
+}
+
+/* Gạch hồng ngắn dưới tiêu đề cột — dùng đúng `.is-divider` Flatsome tự in ra. */
+.footer-widgets.footer-1 .widget>.is-divider {
+	width: 34px;
+	height: 2px;
+	max-width: 34px;
+	margin: 13px 0 20px;
+	background-color: var(--fs-color-primary);
+}
+
+.footer-widgets.footer-1 .ht-foot-logo {
+	margin: 0 0 26px;
+	max-width: 216px;
+	height: auto;
+}
+
+.footer-widgets.footer-1 p {
+	margin: 0;
+	font-size: 14.5px;
+	line-height: 1.95;
+	color: var(--ht-foot-body);
+}
+
+.footer-widgets.footer-1 a {
+	color: var(--ht-foot-body);
+	transition: color .18s ease;
+}
+
+.footer-widgets.footer-1 a:hover {
+	color: var(--fs-color-primary);
+}
+
+/* Danh sách menu: mũi tên hồng nét mảnh, chữ thường. */
+.footer-widgets.footer-1 ul.menu>li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+}
+
+.footer-widgets.footer-1 ul.menu>li>a {
+	display: inline-flex;
+	align-items: center;
+	padding: 8px 0;
+	font-size: 14.5px;
+	line-height: 1.6;
+}
+
+.footer-widgets.footer-1 ul.menu>li>a::before {
+	content: "";
+	flex: 0 0 12px;
+	width: 12px;
+	height: 12px;
+	margin-right: 12px;
+	background-color: var(--fs-color-primary);
+	-webkit-mask: url("../images/icons/chevron-right.svg") center/contain no-repeat;
+	mask: url("../images/icons/chevron-right.svg") center/contain no-repeat;
+	transition: transform .18s ease;
+}
+
+.footer-widgets.footer-1 ul.menu>li>a:hover::before {
+	transform: translateX(3px);
+}
+
+/* Ba nút mạng xã hội: tròn, nền hồng phấn, không viền. */
+ul.ht-foot-social {
+	display: flex;
+	gap: 11px;
+	margin: 26px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.ht-foot-social>li {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+}
+
+.ht-foot-social a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background-color: #fbe8ed;
+	color: var(--ht-foot-title);
+	transition: background-color .18s ease, color .18s ease;
+}
+
+.ht-foot-social a:hover {
+	background-color: var(--fs-color-primary);
+	color: #fff;
+}
+
+.ht-foot-social a i {
+	font-size: 16px;
+}
+
+/* Nút Zalo: logo đã là hình tròn đặc nên để trần, không lồng thêm nền tròn. */
+.ht-foot-social .ht-soc-zalo {
+	background-color: transparent;
+	transition: opacity .18s ease;
+}
+
+.ht-foot-social .ht-soc-zalo:hover {
+	background-color: transparent;
+	opacity: .82;
+}
+
+.ht-foot-social a .ht-zalo {
+	flex: 0 0 40px;
+	width: 40px;
+	height: 40px;
+}
+
+/* Cột liên hệ: icon trong huy hiệu tròn, nhãn xám, giá trị hồng đậm. */
+ul.ht-foot-contact {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.ht-foot-contact>li {
+	display: flex;
+	align-items: flex-start;
+	margin: 0;
+	padding: 0 0 18px;
+	border: 0;
+	list-style: none;
+}
+
+ul.ht-foot-contact>li:last-child {
+	padding-bottom: 0;
+}
+
+.ht-foot-badge {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 38px;
+	width: 38px;
+	height: 38px;
+	margin-right: 14px;
+	border-radius: 50%;
+	background-color: #fce9ee;
+	color: var(--fs-color-primary);
+}
+
+.ht-foot-badge .ht-i {
+	width: 18px;
+	height: 18px;
+}
+
+/* Logo Zalo bản thân đã là hình tròn đặc — bỏ nền huy hiệu để không thành hai
+   vòng tròn lồng nhau; giữ nguyên ô 38px cho các dòng thẳng hàng. */
+.ht-foot-badge--plain {
+	background-color: transparent;
+}
+
+.ht-foot-badge .ht-zalo {
+	flex: 0 0 34px;
+	width: 34px;
+	height: 34px;
+}
+
+.ht-foot-cinfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 0;
+	min-height: 38px;
+}
+
+.ht-foot-cinfo small,
+.ht-foot-cinfo span {
+	font-size: 14.5px;
+	line-height: 1.6;
+	color: var(--ht-foot-body);
+}
+
+.ht-foot-cinfo a {
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.6;
+	color: var(--fs-color-primary);
+}
+
+.ht-foot-cinfo a:hover {
+	color: #c93a5c;
+}
+
+.absolute-footer {
+	padding: 20px 0;
+	border-top: 1px solid var(--ht-foot-line);
+	font-size: 13.5px;
+	color: var(--ht-foot-body);
+}
+
+.absolute-footer a {
+	font-weight: 700;
+	color: var(--fs-color-primary);
+}
+
+@media (max-width: 849px) {
+	.footer-widgets.footer-1 {
+		padding: 44px 0 30px;
+		background-size: 260px auto;
+		background-position: right -50px bottom -40px;
+	}
+
+	.footer-widgets.footer-1 .widget {
+		margin-bottom: 26px;
+	}
+}
+
+/* Flatsome chỉ sinh `large-columns-4` cho hàng footer nên ở tablet bốn cột dồn
+   thành một dải rất dài — xếp lại thành hai cột. */
+@media (min-width: 550px) and (max-width: 849px) {
+	.footer-widgets.footer-1>.row>.col {
+		flex-basis: 50%;
+		max-width: 50%;
+	}
+}
+
+/* Trên điện thoại chỉ hai cột menu đứng cạnh nhau; cột thương hiệu và cột liên
+   hệ vẫn để full cho chữ khỏi bị bó. */
+@media (max-width: 549px) {
+	.footer-widgets.footer-1>.row>.widget_nav_menu {
+		flex-basis: 50%;
+		max-width: 50%;
+	}
+
+	.footer-widgets.footer-1 .widget-title {
+		font-size: 12px;
+		letter-spacing: .07em;
+	}
+
+	.footer-widgets.footer-1 ul.menu>li>a {
+		font-size: 13.5px;
+	}
+
+	.footer-widgets.footer-1 ul.menu>li>a::before {
+		margin-right: 8px;
+	}
+}
+
+/* ==================================================== 13. INNER PAGES == */
+
+.ht-phead {
+	border-bottom: 1px solid var(--ht-line);
+	background: var(--ht-blush-50);
+}
+
+.ht-phead-title .section-title-main {
+	display: block;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: clamp(28px, 3.4vw, 46px);
+	font-weight: 800;
+	line-height: 1.16;
+	letter-spacing: -.025em;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+.ht-phead-sub {
+	max-width: 620px;
+	margin: 12px auto 0;
+	font-size: 15px;
+	line-height: 1.9;
+	color: var(--ht-body);
+}
+
+.ht-block-title .section-title-main {
+	display: block;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: var(--ht-display);
+	font-size: clamp(21px, 2.2vw, 26px);
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: -.015em;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+.ht-prose p {
+	font-size: 15px;
+	line-height: 1.9;
+	color: var(--ht-body);
+}
+
+/* ------------------------------------------ Dải quy trình "Ba bước" ------ */
+/* Nền hồng phấn, ba thẻ trắng viền mảnh, icon trong vòng tròn hồng nhạt.
+   Số 01/02/03 sinh bằng counter nên đảo thứ tự thẻ là số tự đánh lại đúng. */
+
+.ht-steps {
+	counter-reset: ht-step;
+	border-top: 1px solid var(--ht-foot-line);
+	background-color: #fdf8fa;
+}
+
+.ht-step {
+	counter-increment: ht-step;
+}
+
+.ht-step>.col-inner {
+	height: 100%;
+	border: 1px solid var(--ht-foot-line);
+	border-radius: 18px;
+}
+
+/* `.icon-box-left` của Flatsome bật `flex-flow: wrap` — với đoạn mô tả dài thì
+   cột chữ rơi xuống dưới icon thay vì nằm bên phải. */
+.ht-step .icon-box {
+	flex-wrap: nowrap;
+	align-items: flex-start;
+	margin-bottom: 0;
+}
+
+/* `img_width` ghi width inline lên .icon-box-img; ép lại thành vòng tròn. */
+.ht-step .icon-box-img {
+	width: 86px !important;
+	height: 86px;
+	flex: 0 0 86px;
+	margin: 0;
+}
+
+.ht-step .icon-box-img .icon {
+	display: flex;
+	box-sizing: border-box;
+	align-items: center;
+	justify-content: center;
+	width: 86px;
+	height: 86px;
+	padding: 22px;
+	border-radius: 50%;
+	background-color: var(--ht-blush-100);
+}
+
+/* Flatsome ép `fill:currentColor` lên mọi SVG icon-box; giữ icon nét mảnh. */
+.ht-step .icon-inner svg[fill="none"],
+.ht-step .icon-inner svg[fill="none"] path {
+	fill: none;
+}
+
+.ht-step .icon-inner svg[stroke] {
+	stroke: currentColor;
+}
+
+/* `.icon-box-left .icon-box-text{padding-left:1rem}` là (0,3,0) — phải đủ mạnh.
+   Nội dung của [featured_box] là text trần (không bọc <p>) nên cỡ chữ đặt ngay
+   trên khối này. */
+.ht-step .icon-box.icon-box-left .icon-box-text {
+	flex: 1 1 0;
+	min-width: 0;
+	padding: 0 0 0 18px;
+	font-size: 13.5px;
+	line-height: 1.8;
+	color: var(--ht-body);
+}
+
+.ht-step .icon-box-text::before {
+	content: "0" counter(ht-step);
+	display: block;
+	margin-bottom: 6px;
+	font-size: 32px;
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: -.02em;
+	color: var(--fs-color-primary);
+}
+
+.ht-step .icon-box-text h5 {
+	margin: 0 0 8px;
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 1.3;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+.ht-step .icon-box-text p {
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.78;
+	color: var(--ht-body);
+}
+
+@media (max-width: 549px) {
+
+	.ht-step .icon-box-img,
+	.ht-step .icon-box-img .icon {
+		width: 64px !important;
+		height: 64px;
+		flex-basis: 64px;
+	}
+
+	.ht-step .icon-box-img .icon {
+		padding: 18px;
+	}
+
+	.ht-step .icon-box.icon-box-left .icon-box-text {
+		padding-left: 16px;
+	}
+
+	.ht-step .icon-box-text::before {
+		font-size: 27px;
+	}
+}
+
+/* Thẻ giá trị ở trang giới thiệu */
+.ht-value>.col-inner {
+	height: 100%;
+	border: 1px solid var(--ht-line);
+	border-radius: var(--ht-radius);
+}
+
+.ht-value .icon-box-img .icon {
+	display: flex;
+	box-sizing: border-box;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 52px;
+	margin: 0 auto;
+	padding: 12px;
+	border-radius: var(--ht-radius-sm);
+	background: var(--ht-blush-100);
+}
+
+.ht-value .icon-inner svg[fill="none"],
+.ht-value .icon-inner svg[fill="none"] path {
+	fill: none;
+}
+
+.ht-value .icon-box-text h5 {
+	margin: 12px 0 6px;
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--ht-green);
+}
+
+.ht-value .icon-box-text p {
+	margin: 0;
+	font-size: 13.5px;
+	line-height: 1.75;
+	color: var(--ht-body);
+}
+
+/* Trang liên hệ */
+.ht-contact-list ul {
+	margin: 0;
+	list-style: none;
+}
+
+.ht-contact-list li {
+	margin: 0 !important;
+	padding: 13px 0;
+	border-bottom: 1px solid var(--ht-line);
+	font-size: 14.5px;
+	line-height: 1.6;
+}
+
+.ht-contact-list li:last-child {
+	border-bottom: 0;
+}
+
+.ht-contact-list li strong {
+	display: block;
+	margin-bottom: 3px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .09em;
+	text-transform: uppercase;
+	color: var(--ht-mute);
+}
+
+.ht-contact-list li a {
+	font-weight: 700;
+	color: var(--fs-color-primary);
+}
+
+.ht-contact-form>.col-inner {
+	border: 1px solid var(--ht-line);
+	border-radius: var(--ht-radius);
+}
+
+.ht-contact-form .wpcf7-form-control:not(.wpcf7-submit) {
+	height: 48px;
+	margin-bottom: 12px;
+	border: 1px solid var(--ht-line);
+	border-radius: 10px !important;
+	background-color: #fff;
+	box-shadow: none;
+	font-size: 14px;
+}
+
+.ht-contact-form .wpcf7-form-control:not(.wpcf7-submit):focus {
+	border-color: var(--ht-blush-300);
+}
+
+.ht-contact-form .wpcf7-form-control.wpcf7-textarea {
+	height: auto;
+	min-height: 124px;
+	padding: 13px 15px;
+}
+
+.ht-form-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+}
+
+.ht-contact-form .ht-form-btn {
+	width: 100%;
+	margin: 0 0 18px !important;
+	padding: 0 24px;
+	border: 0;
+	border-radius: 99px !important;
+	background-color: var(--fs-color-primary);
+	color: #fff;
+	font-size: 13.5px;
+	font-weight: 700;
+	line-height: 50px;
+	letter-spacing: .05em;
+}
+
+.ht-contact-form .ht-form-btn:hover {
+	background-color: #c93a5c;
+}
+
+.ht-map iframe {
+	display: block;
+	overflow: hidden;
+	border-radius: var(--ht-radius);
+	filter: saturate(.92);
+}
+
+.ht-about-figure .col-inner img {
+	border-radius: var(--ht-radius);
+}
+
+/* ============================================= 14. ARCHIVE / SHOP TWEAKS == */
+
+.breadcrumbs {
+	font-weight: 400;
+}
+
+.shop-page-title .page-title-inner {
+	padding-top: 22px;
+	padding-bottom: 8px;
+}
+
+.shop-page-title h1.shop-page-title {
+	font-size: clamp(24px, 2.6vw, 34px);
+	font-weight: 700;
+	letter-spacing: -.015em;
+	color: var(--ht-green);
+}
+
+/* Mô tả danh mục nằm dưới lưới sản phẩm, mặc định thu gọn.
+   Chiều cao thu gọn khai báo ở đây là nguồn duy nhất — JS đọc lại từ DOM. */
+.ht-term-desc {
+	margin: 26px 0 4px;
+	padding-top: 26px;
+	border-top: 1px solid var(--ht-line);
+}
+
+.ht-term-desc__title {
+	margin: 0 0 12px;
+	font-family: var(--ht-display);
+	font-size: 25px;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: -.005em;
+	color: var(--ht-green);
+}
+
+.ht-term-desc__body {
+	position: relative;
+	max-height: 132px;
+	overflow: hidden;
+	transition: max-height .32s ease;
+}
+
+/* Vệt mờ báo còn nội dung phía dưới. */
+.ht-term-desc__body::after {
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 58px;
+	background: linear-gradient(rgba(255, 255, 255, 0), #fff 88%);
+	pointer-events: none;
+	transition: opacity .2s ease;
+}
+
+.ht-term-desc.is-open .ht-term-desc__body {
+	max-height: 4000px;
+}
+
+.ht-term-desc.is-open .ht-term-desc__body::after,
+.ht-term-desc.is-short .ht-term-desc__body::after {
+	opacity: 0;
+}
+
+.ht-term-desc.is-short .ht-term-desc__body {
+	max-height: none;
+}
+
+.ht-term-desc__body p,
+.ht-term-desc__body li {
+	font-size: 15px;
+	line-height: 1.95;
+	color: var(--ht-body);
+}
+
+.ht-term-desc__body h2,
+.ht-term-desc__body h3,
+.ht-term-desc__body h4 {
+	margin: 22px 0 10px;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1.4;
+	color: var(--ht-green);
+}
+
+.ht-term-desc__body>*:last-child {
+	margin-bottom: 0;
+}
+
+.ht-term-desc button.ht-term-desc__more {
+	display: inline-flex;
+	align-items: center;
+	min-height: 0;
+	margin: 16px 0 0;
+	padding: 10px 24px;
+	border: 1px solid var(--ht-blush-200);
+	border-radius: 99px;
+	background-color: #fff;
+	box-shadow: none;
+	color: var(--fs-color-primary);
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: .03em;
+	text-transform: none;
+	transition: border-color .18s ease, background-color .18s ease;
+}
+
+.ht-term-desc button.ht-term-desc__more:hover {
+	border-color: var(--fs-color-primary);
+	background-color: var(--ht-blush-50);
+	color: var(--fs-color-primary);
+}
+
+.ht-term-desc button.ht-term-desc__more::after {
+	content: "";
+	width: 13px;
+	height: 13px;
+	margin-left: 9px;
+	background-color: currentColor;
+	-webkit-mask: url("../images/icons/chevron-right.svg") center/contain no-repeat;
+	mask: url("../images/icons/chevron-right.svg") center/contain no-repeat;
+	transform: rotate(90deg);
+	transition: transform .22s ease;
+}
+
+.ht-term-desc.is-open button.ht-term-desc__more::after {
+	transform: rotate(-90deg);
+}
+
+span.amount {
+	color: var(--fs-color-primary);
+}
+
+.container .message-container,
+.woocommerce-message.message-wrapper {
+	outline: 0 !important;
+}
+
+a.button.primary.wc-backward {
+	white-space: nowrap;
+}
+
+/* ====================================================== 15. RESPONSIVE == */
+
+@media (max-width: 849px) {
+
+	/* Ảnh hero là bố cục ngang (hoa nằm bên phải) nên khi dồn về một cột, chữ đè
+	   lên hoa và mất đọc được. Dưới 850px ẩn ảnh, để nền trắng phẳng.
+	   Flatsome dựng nền bằng thẻ <img class="bg"> chứ không phải background-image. */
+	.ht-hero .section-bg>img.bg {
+		display: none;
+	}
+
+	.ht-hero .section-bg {
+		background-color: var(--ht-blush-50);
+	}
+
+	/* Cột chữ chiếm trọn bề ngang khi ảnh đã ẩn, mọi thành phần căn giữa. */
+	.ht-hero .ht-hero-copy {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+
+	.ht-hero-title .section-title,
+	.ht-hero-copy {
+		text-align: center;
+	}
+
+	.ht-hero .ht-hero-cta {
+		justify-content: center;
+	}
+
+	.ht-hero-sub,
+	.ht-hero-chips {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.ht-hero-chips {
+		justify-content: center;
+		gap: 10px 26px;
+	}
+
+	/* Trên cảm ứng không có hover — ép slot Gọi/Zalo hiện sẵn.
+	   `.hover-slide-in` dịch 100% và rule reveal của Flatsome dùng !important. */
+	.product-small .image-tools.ht-actions-slot {
+		opacity: 1 !important;
+		transform: translateY(0) !important;
+		pointer-events: auto;
+	}
+}
+
+@media (max-width: 549px) {
+
+	/* `pos` của [featured_box] không có bản responsive — dưới 550px lật icon-left
+	   thành icon trên, chữ căn giữa cho hai hàng hai cột nhìn cân. */
+	.ht-usp .icon-box.icon-box-left {
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.ht-usp .icon-box-img {
+		margin: 0 auto;
+	}
+
+	.ht-usp .icon-box.icon-box-left .icon-box-text {
+		flex: 0 0 auto;
+		padding: 0;
+		text-align: center;
+	}
+
+	/* Đầu trang danh mục: gom sát lại, chữ nhỏ hơn để nhường chỗ cho lưới hoa. */
+	.shop-page-title .page-title-inner {
+		min-height: 0;
+		padding-top: 12px;
+		padding-bottom: 2px;
+	}
+
+	.shop-page-title .breadcrumbs {
+		font-size: 11.5px;
+	}
+
+	.term-description,
+	.shop-page-title .woocommerce-result-count {
+		font-size: 13px;
+	}
+
+	.ht-hero-cta .button {
+		display: flex;
+		width: 100%;
+		max-width: 300px;
+		padding: 15px 22px;
+	}
+
+	/* Ba tem vừa đúng 2 + 1 dòng khi khe hẹp lại; để 26px thì dòng đầu chỉ chứa 1. */
+	.ht-hero-chips {
+		gap: 10px 16px;
+	}
+
+	.ht-hero-chips li {
+		font-size: 13px;
+	}
+
+	ul.ht-trust__list {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 10px;
+	}
+
+	.ht-form-grid {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+
+	.ht-card-actions a.ht-card-btn {
+		height: 31px;
+		padding: 0 4px;
+		font-size: 11.5px;
+	}
+
+	.ht-card-actions a.ht-card-btn .ht-i,
+	.ht-card-actions a.ht-card-btn .ht-zalo {
+		flex-basis: 14px;
+		width: 14px;
+		height: 14px;
+		margin-right: 4px;
+	}
+
+	.product-small .box-text {
+		padding: 11px 10px 13px;
+	}
+}

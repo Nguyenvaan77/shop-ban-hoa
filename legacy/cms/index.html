@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chỉnh sửa giao diện | Hoa Tươi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./cms.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../" aria-label="Về trang chủ"><span class="brand-mark">✿</span><span>Hoa Tươi <small>CONTENT STUDIO</small></span></a>
+    <div class="top-actions"><span class="save-status" id="save-status">Chưa có thay đổi</span><button class="button button-light" id="show-changes">Xem thay đổi <span id="change-count">0</span></button><button class="button button-primary" id="save">Lưu thay đổi</button></div>
+  </header>
+  <main class="workspace">
+    <aside class="sidebar">
+      <div class="sidebar-intro"><div class="eyebrow">TRANG CHỦ</div><h1>Chỉnh sửa giao diện</h1><p>Chọn một khu vực để chỉnh nội dung, màu sắc và font chữ.</p></div>
+      <div class="sidebar-scroll">
+        <div class="section-heading"><span>CẤU TRÚC TRANG</span><span>11 KHU VỰC</span></div>
+        <nav id="sections" aria-label="Các khu vực trang"></nav>
+        <div class="editor" id="editor" hidden>
+          <div class="editor-header"><div><span class="eyebrow">ĐANG CHỈNH SỬA</span><h2 id="editor-title"></h2></div><button id="close-editor" class="icon-button" aria-label="Đóng bảng chỉnh sửa">×</button></div>
+          <label for="text-select">Nội dung</label><select id="text-select"></select>
+          <textarea id="text-value" rows="3" placeholder="Nhập nội dung"></textarea>
+          <p class="field-hint">Chọn đoạn nội dung trong khu vực này để chỉnh sửa.</p>
+          <div class="editor-divider"></div>
+          <div class="field-row"><div><label for="text-color">Màu chữ</label><p class="field-hint">Áp dụng cho khu vực</p></div><div class="color-control"><input type="color" id="text-color" value="#48483e"><span id="text-color-value">#48483E</span></div></div>
+          <div class="field-row"><div><label for="background">Màu nền</label><p class="field-hint">Áp dụng cho khu vực</p></div><div class="color-control"><input type="color" id="background" value="#fff9f5"><span id="background-value">#FFF9F5</span></div></div>
+          <label for="font">Font chữ</label><select id="font"><option value="">Theo giao diện gốc</option><option value="vietnam">Be Vietnam Pro</option><option value="sans">Arial</option><option value="serif">Georgia</option><option value="times">Times New Roman</option><option value="system">System UI</option></select>
+          <button id="reset-section" class="reset-button">Khôi phục khu vực này</button>
+        </div>
+      </div>
+      <div class="sidebar-footer"><span class="help-icon">i</span><p>Nhấp vào một khu vực trong bản xem trước để chỉnh sửa nhanh.</p></div>
+    </aside>
+    <section class="preview-panel" aria-label="Xem trước giao diện">
+      <div class="preview-toolbar"><div><div class="preview-title">Bản xem trước <span class="live-dot"></span><span class="live-label">TRỰC TIẾP</span></div><p>Thay đổi hiển thị ngay khi bạn chỉnh sửa</p></div><div class="device-controls" role="group" aria-label="Kích thước xem trước"><button class="device active" data-width="desktop" aria-label="Máy tính" title="Máy tính">▱</button><button class="device" data-width="mobile" aria-label="Điện thoại" title="Điện thoại">▯</button></div></div>
+      <div class="preview-stage"><div class="browser-frame" id="frame-wrap"><div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="browser-address">hoatuoi.vn <span>/ trang chủ</span></span><span class="browser-spacer"></span></div><iframe id="preview" src="../?cms-preview=1" title="Xem trước website Hoa Tươi"></iframe></div></div>
+    </section>
+  </main>
+  <dialog id="changes-dialog"><div class="dialog-head"><div><span class="eyebrow">TỔNG QUAN</span><h2>Thay đổi của bạn</h2><p>Theo dõi các nội dung và kiểu giao diện đã chỉnh.</p></div><button class="icon-button" id="close-dialog" aria-label="Đóng">×</button></div><div id="changes-list"></div><div class="dialog-footer"><button class="button button-light" id="done-dialog">Đóng</button></div></dialog>
+  <script src="./cms.js"></script>
+</body>
+</html>
